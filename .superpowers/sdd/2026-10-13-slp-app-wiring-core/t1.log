@@ -1,0 +1,11 @@
+PASS login succeeds for each demo account
+PASS login rejects a wrong password
+PASS unknown username gets the same answer
+PASS five failures lock the account
+PASS inactive account cannot sign in
+PASS session survives and logout ends it
+PASS POST without CSRF is refused
+PASS idle session expires
+PASS sign-in is audited
+PASS internals are not served
+10 passed, 0 failed

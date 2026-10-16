@@ -1,0 +1,50 @@
+PASS schema imports with no warnings
+PASS object counts
+PASS 16 barangays, 8 poblacion
+PASS poblacion flags
+PASS 7 livelihood types
+PASS installer refuses existing database
+PASS installer refuses non-slp names
+PASS run_sql_file stops at a bad statement
+PASS run_sql_file ignores semicolons in comments and strings
+PASS run_sql_file stops on a warning
+PASS connection uses +08:00
+PASS strict mode rejects bad enum and long text
+PASS utf8mb4 round-trips ñ
+PASS demo counts
+PASS every association has a leader and 2+ members
+PASS same livelihood, different barangays
+PASS demo passwords
+PASS user_roles for demo accounts
+PASS stored files match their hashes
+PASS storage is not web-readable
+FAIL connection and view use utf8mb4_unicode_ci: collation_connection is utf8mb4_general_ci
+PHP Warning:  mkdir(): No such file or directory in C:\xampp\htdocs\SLP\database\install.php on line 112
+
+Warning: mkdir(): No such file or directory in C:\xampp\htdocs\SLP\database\install.php on line 112
+FAIL failed install removes the partial database: wrong message: Cannot create C:\Users\julie\AppData\Local\Temp\slp835F.tmp/storage/documents/1
+FAIL CLI rejects unknown arguments: --database=slp_schema_check_cli: wrong message: Database 'slp_monitoring' already exists. Re-run with --fresh to drop and recreate it.
+PASS database folder is not web-readable
+PASS rejects staff with a beneficiary
+PASS rejects participant without beneficiary
+PASS rejects document with two owners or none
+PASS rejects project with two owners or none
+PASS rejects returned document without note
+PASS rejects invalid JSON
+PASS rejects malformed sha256
+PASS rejects tool submitted without time
+PASS rejects sharing a draft report
+PASS rejects negative assistance
+PASS rejects association without livelihood type
+PASS rejects duplicate livelihood type
+PASS rejects second Poultry association in Tilik
+PASS rejects unknown barangay
+PASS rejects leader from another association
+PASS rejects duplicate version number
+PASS history tables are append-only
+PASS changing the leader changes roles only
+PASS Juan sees only his association's documents
+PASS Juan sees submitted tools of his association
+PASS notifications reach the right people
+PASS activity feed is per association
+43 passed, 3 failed

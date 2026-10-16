@@ -1,0 +1,32 @@
+PASS login succeeds for each demo account
+PASS login rejects a wrong password
+PASS unknown username gets the same answer
+PASS five failures lock the account
+PASS inactive account cannot sign in
+PASS session survives and logout ends it
+PASS POST without CSRF is refused
+PASS idle session expires
+PASS sign-in is audited
+PASS internals are not served
+PASS bootstrap needs a session
+PASS staff snapshot has everything
+PASS member snapshot is filtered
+PASS leader snapshot is filtered
+PASS no password hash in any snapshot
+PASS read state is per user
+PASS livelihood comes from association or own project
+PASS participants cannot call staff endpoints
+PASS beneficiary create
+PASS beneficiary create validates
+PASS bad types are rejected, not crashed on
+PASS ñ survives the API round trip
+PASS project create needs exactly one owner
+PASS monitoring create rejects a future date
+PASS assistance amount rules
+PASS report create
+PASS account create
+PASS send to one or to all
+PASS participants cannot send
+PASS read marks only visible notifications
+PASS read_all marks every visible notification
+31 passed, 0 failed

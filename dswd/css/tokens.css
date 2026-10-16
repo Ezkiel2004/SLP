@@ -1,0 +1,109 @@
+/* ==============================================================
+   DSWD DESIGN SYSTEM — TOKENS
+   The single source of every color, size, radius and shadow.
+   Load this file first, then base.css, then components.css.
+
+   RULES
+   - Components use these variables only. Missing a value? Add it
+     here (with a comment) instead of hard-coding it in a component.
+   - Contrast ratios are WCAG 2.x, measured against the named ground.
+
+   BREAKPOINTS (mobile-first min-width; CSS variables cannot be used
+   inside @media, so these are written literally in the queries)
+     360px   button groups sit in a row
+     768px   larger H1/H2, wider padding and gap, span-md-* columns
+     1024px  desktop nav row, span-lg-* columns
+     1440px  no rule: content already stops at 1200px
+   ============================================================== */
+
+:root {
+    /* ---- Brand color: green and white only ---- */
+    --green-900: #0F4A2C;   /* footer, headings on tint. White on it 10.31:1 */
+    --green-700: #166039;   /* button hover. White on it 7.59:1 */
+    --green-600: #1E7A4C;   /* primary, links. 5.33:1 on white, 4.71:1 on green-100 */
+    --green-100: #E8F4EC;   /* tint: hover, selected, current */
+    --white:     #FFFFFF;
+    --surface:   #F6F9F7;   /* table header, preview specimen areas */
+
+    /* ---- Text and borders ---- */
+    --text:          #1A2420;  /* 15.94:1 on white */
+    --text-muted:    #5A6760;  /* 5.93:1 on white, 5.24:1 on green-100 */
+    --border:        #DDE5E0;  /* decorative only: cards, dividers (1.28:1) */
+    --border-strong: #5A6760;  /* edges of form controls, 5.93:1 (WCAG 1.4.11 needs 3:1) */
+
+    /* ---- Status: feedback messages only, on icons and borders ---- */
+    --success: #1E8E5A;  /* 4.14:1: icon and border only, never text */
+    --warning: #C77700;  /* 3.46:1: icon and border only, never text */
+    --error:   #C62828;  /* 5.62:1: icon, border and field-error text */
+
+    /* ---- Interaction ---- */
+    --focus:   var(--green-600);          /* ring color; the footer sets it to white */
+
+    /* ---- Typography: Inter only ---- */
+    --font-sans: "Inter", system-ui, sans-serif;
+    --fs-h1:    2rem;      /* 32px on phones, 40px from 768px */
+    --fs-h2:    1.75rem;   /* 28px on phones, 32px from 768px */
+    --fs-h3:    1.5rem;    /* 24px */
+    --fs-h4:    1.25rem;   /* 20px */
+    --fs-body:  1rem;      /* 16px */
+    --fs-small: 0.875rem;  /* 14px */
+    --fw-regular:  400;    /* body */
+    --fw-medium:   500;    /* labels, buttons, nav */
+    --fw-semibold: 600;    /* headings, selected states */
+    --lh-body:    1.5;
+    --lh-heading: 1.2;
+    --lh-control: 1.25;    /* single-line controls */
+
+    /* ---- Spacing: 8px scale ---- */
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+
+    /* ---- Shape ---- */
+    --radius:      16px;                          /* cards, fields, modals, alerts */
+    --radius-pill: 999px;                         /* buttons, tabs, nav links, pagination */
+    --shadow:      0 1px 3px rgba(0, 0, 0, 0.06); /* cards and the modal only */
+
+    /* ---- Controls and icons ---- */
+    --control-height: 48px;       /* buttons, inputs, selects (brief minimum is 44px) */
+    --btn-padding:    12px 24px;
+    --input-padding:  12px 16px;
+    --target-min:     44px;       /* smallest tap target */
+    --choice-size:    20px;       /* checkbox and radio */
+    --icon:           20px;
+    --icon-lg:        24px;
+
+    /* ---- Layout ---- */
+    --container:    1200px;  /* max content width */
+    --page-padding: 16px;    /* 24px from 768px, 32px from 1024px */
+    --grid-gap:     16px;    /* 24px from 768px */
+    --modal-width:  560px;
+    --form-width:   40rem;   /* 640px: readable single-column forms */
+    --measure:      36em;    /* paragraph width: about 72 characters of Inter at any text size */
+    --header-offset: 88px;   /* sticky header height, so anchors and focus stay visible; 140px from 1024px */
+}
+
+/* The dialog backdrop gets the token directly: ::backdrop does not inherit
+   from :root before Chromium 122, Firefox 120 and Safari 17.4. */
+:root, ::backdrop {
+    --overlay: rgba(26, 36, 32, 0.5);  /* dialog backdrop: --text at 50% */
+}
+
+@media (min-width: 768px) {
+    :root {
+        --fs-h1: 2.5rem;  /* 40px */
+        --fs-h2: 2rem;    /* 32px */
+        --page-padding: 24px;
+        --grid-gap: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --page-padding: 32px;
+        --header-offset: 140px;
+    }
+}

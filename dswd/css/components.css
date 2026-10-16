@@ -1,0 +1,937 @@
+/* ==============================================================
+   DSWD DESIGN SYSTEM — COMPONENTS
+   Load after tokens.css and base.css.
+
+   SECTIONS
+     1 Icons        6 Card          11 Tabs
+     2 Buttons      7 Alerts        12 Accordion
+     3 Header       8 Table         13 Modal
+     4 Footer       9 Pagination
+     5 Breadcrumbs  10 Form fields
+     14-32 Site components (phase 2): header extensions, title band,
+     search form, filters, link card, section head, media list, table of
+     contents, checklist, steps, file list, details, prose, note, person,
+     org tree, band, empty state, page body.
+
+   CONVENTIONS
+   - BEM names: block, block__element, block--modifier.
+   - State comes from native pseudo-classes and ARIA attributes
+     (:hover, :focus-visible, :disabled, [aria-invalid], [aria-current],
+     [aria-selected], [aria-expanded], [open]), not state classes.
+   - .is-hover, .is-focus and .is-current exist only so the preview page
+     can show those states without a mouse or a real current page.
+     Pair every :hover with .is-hover.
+   - Selected or current = green-100 tint + green-900 text + 600 weight
+     + a 1px inset green-600 ring (the tint alone is only 1.12:1).
+   - Tokens only: no hard-coded colors or sizes, no gradients,
+     no transitions or animations.
+   ============================================================== */
+
+
+/* 1. ICONS — Lucide symbols from img/icons.svg. Always decorative
+   (aria-hidden) and next to visible text; they take the text color.
+   Add an icon: copy its Lucide paths into a new <symbol> in the sprite. */
+.icon {
+    width: var(--icon);
+    height: var(--icon);
+    flex: none;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.icon--24 { width: var(--icon-lg); height: var(--icon-lg); }
+
+
+/* 2. BUTTONS — .btn plus one variant, on <button> or <a>. One primary
+   per area; labels start with a verb. Disable with `disabled` on a
+   button, or aria-disabled="true" (and no href) on a link. */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-height: var(--control-height);
+    padding: var(--btn-padding);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-control);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn--primary { background: var(--green-600); border-color: var(--green-600); color: var(--white); }
+.btn--primary:hover,
+.btn--primary.is-hover { background: var(--green-700); border-color: var(--green-700); color: var(--white); }
+.btn--primary:active { background: var(--green-900); border-color: var(--green-900); }
+
+.btn--secondary { background: var(--white); border-color: var(--green-600); color: var(--green-600); }
+.btn--secondary:hover,
+.btn--secondary.is-hover { background: var(--green-100); border-color: var(--green-700); color: var(--green-700); }
+
+.btn--ghost { background: transparent; color: var(--green-600); }
+.btn--ghost:hover,
+.btn--ghost.is-hover { background: var(--green-100); color: var(--green-700); }
+
+/* Disabled comes last so it beats hover at equal specificity. */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    background: var(--border);
+    border-color: var(--border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+.btn--ghost:disabled,
+.btn--ghost[aria-disabled="true"] { background: transparent; border-color: transparent; }
+
+/* Group: stacked full width on the smallest phones, a wrapping row from 360px. */
+.btn-group { display: flex; flex-direction: column; gap: var(--space-2); }
+@media (min-width: 360px) {
+    .btn-group { flex-direction: row; flex-wrap: wrap; align-items: center; }
+}
+
+
+/* 3. HEADER — a brand row, then the nav row. Below 1024px the nav hides
+   behind the Menu button, but only once ui.js has run (html.js), so a
+   failed script never hides navigation. The toggle's aria-expanded is
+   the only state. Mark the current page with aria-current="page". Keep
+   .menu-toggle directly before .site-nav: the collapse rule depends on it. */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Grid, not flex-wrap: the brand shrinks and wraps beside the Search link
+   and the Menu button instead of pushing them onto their own row; the nav
+   spans every column. */
+.site-header__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: var(--space-2) var(--space-1);
+    padding-block: var(--space-2);
+}
+.site-header .btn { padding-inline: var(--space-2); }
+
+.brand {
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    min-height: var(--target-min);
+    gap: var(--space-1);
+    color: var(--green-900);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-heading);
+    text-decoration: none;
+}
+.brand:hover .brand__name { text-decoration: underline; }
+.brand__logo { flex: none; }
+
+/* Phones get a smaller name so the long agency name fits in three lines beside the Menu button. */
+.brand__name { font-size: var(--fs-small); }
+@media (min-width: 768px) {
+    .brand { gap: var(--space-2); }
+    .brand__name { font-size: var(--fs-body); }
+}
+
+.menu-toggle { display: none; }
+.js .menu-toggle { display: inline-flex; }
+
+/* The open nav scrolls inside itself when it is taller than the screen. */
+.site-nav {
+    grid-column: 1 / -1;
+    max-height: calc(100dvh - var(--header-offset));
+    overflow-y: auto;
+    padding-top: var(--space-1);
+    border-top: 1px solid var(--border);
+}
+.js .menu-toggle[aria-expanded="false"] + .site-nav { display: none; }
+
+.site-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-nav__link {
+    display: flex;
+    align-items: center;
+    min-height: var(--target-min);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+}
+.site-nav__link:hover,
+.site-nav__link.is-hover { color: var(--green-700); text-decoration: underline; }
+/* aria-current="page" on the page itself, "true" on a page inside that section. */
+.site-nav__link[aria-current],
+.site-nav__link.is-current {
+    background: var(--green-100);
+    color: var(--green-900);
+    font-weight: var(--fw-semibold);
+    box-shadow: inset 0 0 0 1px var(--green-600);
+}
+
+@media (min-width: 1024px) {
+    .js .menu-toggle { display: none; }
+    .site-nav,
+    .js .menu-toggle[aria-expanded="false"] + .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-1) var(--space-2);
+        max-height: none;
+        overflow: visible;
+    }
+    .site-nav__list { flex-direction: row; flex-wrap: wrap; }
+}
+
+
+/* 4. FOOTER — a green-900 band with white text. It sets --focus to white
+   so the focus ring stays visible on the dark ground. Contact details
+   stay as bracketed placeholders until the agency supplies them. */
+.site-footer {
+    --focus: var(--white);
+    padding-block: var(--space-6) var(--space-4);
+    background: var(--green-900);
+    color: var(--white);
+}
+
+/* Equal padding above and below one line of text makes a 44px target, and
+   keeps the spacing even when a long link wraps to two lines. */
+.site-footer a {
+    display: inline-block;
+    min-width: var(--target-min);
+    padding-block: calc((var(--target-min) - 1em * var(--lh-body)) / 2);
+    color: var(--white);
+}
+.site-footer a:hover,
+.site-footer a.is-hover { color: var(--white); text-decoration-thickness: 2px; }
+
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+
+.site-footer__name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-heading);
+}
+.site-footer__name img { flex: none; }
+
+.site-footer__contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+    color: var(--green-100);
+}
+
+.site-footer__heading { margin: 0 0 var(--space-1); font-size: var(--fs-body); }
+
+.site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--green-700);
+    color: var(--green-100);
+    font-size: var(--fs-small);
+}
+.site-footer__bottom p { margin: 0; }
+.site-footer__bottom ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-3); }
+
+
+/* 5. BREADCRUMBS — where the page sits, above the page title. The last
+   item is the current page: a <span aria-current="page">, not a link.
+   Chevron icons separate the items. */
+.breadcrumb { margin-bottom: var(--space-3); }
+
+.breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-small);
+}
+.breadcrumb__item { display: flex; align-items: center; gap: var(--space-1); }
+.breadcrumb__item .icon { color: var(--text-muted); }
+
+.breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--target-min);
+    min-height: var(--target-min);
+}
+.breadcrumb [aria-current="page"] { color: var(--text-muted); }
+
+
+/* 6. CARD — groups one topic. The card is not clickable as a whole: its
+   title link carries hover and focus. Never nest cards. */
+.card {
+    padding: var(--space-3);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.card__title { margin: 0 0 var(--space-1); font-size: var(--fs-h4); }
+.card > :last-child { margin-bottom: 0; }
+
+
+/* 7. ALERTS — feedback messages only. The status color is on the 1px
+   border and the icon; the title and body carry the meaning in --text.
+   Add role="alert" only when an alert is inserted after page load. */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--white);
+    border: 1px solid;
+    border-radius: var(--radius);
+}
+.alert__title { margin: 0; font-weight: var(--fw-semibold); }
+.alert__content > :last-child { margin-bottom: 0; }
+
+.alert--success { border-color: var(--success); }
+.alert--success .alert__icon { color: var(--success); }
+.alert--warning { border-color: var(--warning); }
+.alert--warning .alert__icon { color: var(--warning); }
+.alert--error { border-color: var(--error); }
+.alert--error .alert__icon { color: var(--error); }
+
+
+/* 8. TABLE — always with a <caption>. Wrap it in .table-wrap
+   (role="region", tabindex="0", aria-labelledby the caption id) so a wide
+   table scrolls inside its frame on phones instead of the whole page. */
+.table-wrap {
+    position: relative;  /* keeps absolutely positioned (visually hidden) text inside the scroll area */
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.table { width: 100%; border-collapse: collapse; }
+.table caption { padding: var(--space-2); font-weight: var(--fw-semibold); text-align: left; }
+.table th,
+.table td {
+    padding: var(--space-2);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+.table thead th { background: var(--surface); font-weight: var(--fw-semibold); }
+.table tbody tr:last-child > * { border-bottom: 0; }
+.table .num { text-align: right; }
+
+
+/* 9. PAGINATION — position in a long list. Page numbers carry
+   aria-label="Page N"; the current one has aria-current="page". A
+   disabled Previous or Next is <span role="link" aria-disabled="true">. */
+.pagination__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-width: var(--target-min);
+    min-height: var(--target-min);
+    padding: 0 var(--space-1);
+    border-radius: var(--radius-pill);
+    color: var(--green-600);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+}
+.pagination__link:hover,
+.pagination__link.is-hover { background: var(--green-100); color: var(--green-700); }
+.pagination__link[aria-current="page"] { background: var(--green-600); color: var(--white); }
+.pagination__link[aria-disabled="true"] { background: transparent; color: var(--text-muted); cursor: not-allowed; }
+
+.pagination__ellipsis { padding: 0 var(--space-1); color: var(--text-muted); }
+
+/* Phones show Previous, "Page 2 of 5" and Next, so the row never wraps
+   and the reader still sees how many pages there are. From 768px the page
+   numbers replace the status. Mark each number and ellipsis <li> with
+   .pagination__page and the status <li> with .pagination__status. */
+.pagination__page { display: none; }
+.pagination__status { padding: 0 var(--space-1); font-weight: var(--fw-medium); }
+@media (min-width: 768px) {
+    .pagination__page { display: block; }
+    .pagination__status { display: none; }
+}
+
+
+/* 10. FORM FIELDS — label, hint, error message, then the control, inside
+   .field. Required fields say "(required)" in the label; optional ones
+   are not marked. For an error, set aria-invalid="true" on the control
+   and add the .field__error id to its aria-describedby. */
+.field > * + * { margin-top: var(--space-1); }
+.field + .field { margin-top: var(--space-3); }
+
+.field__label,
+.fieldset__legend { display: block; font-weight: var(--fw-medium); }
+.field__required { font-weight: var(--fw-regular); }
+
+.field__hint { margin-bottom: 0; font-size: var(--fs-small); color: var(--text-muted); }
+
+.field__error {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-1);
+    margin-bottom: 0;
+    color: var(--error);
+    font-weight: var(--fw-medium);
+}
+
+/* .input styles text inputs, textareas and selects alike. */
+.input {
+    display: block;
+    width: 100%;
+    min-height: var(--control-height);
+    padding: var(--input-padding);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--text);
+    line-height: var(--lh-control);
+}
+textarea.input { line-height: var(--lh-body); resize: vertical; }
+.input:hover,
+.input.is-hover { border-color: var(--text); }
+.input[aria-invalid="true"] { border-color: var(--error); box-shadow: inset 0 0 0 1px var(--error); }
+.input:disabled { background: var(--border); border-color: var(--border); color: var(--text-muted); cursor: not-allowed; }
+
+/* Select: native control, our chevron. Wrap it: <div class="select">. */
+.select { position: relative; }
+.select .input { appearance: none; padding-right: calc(var(--space-2) * 2 + var(--icon)); }
+.select .icon {
+    position: absolute;
+    top: 50%;
+    right: var(--space-2);
+    translate: 0 -50%;
+    pointer-events: none;
+}
+.select:has(:disabled) .icon { color: var(--text-muted); }
+
+/* Checkboxes and radios: native controls in 44px rows, grouped in a
+   fieldset with a legend. The whole row is the click target. */
+.fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.fieldset__legend { margin-bottom: var(--space-1); padding: 0; }
+.fieldset > .field__hint,
+.fieldset > .field__error { margin-bottom: var(--space-1); }
+
+.choices { display: grid; }
+
+/* Equal padding around the first line keeps 44px rows, and keeps wrapped
+   labels evenly spaced; the control lines up with the first line of text. */
+.choice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: var(--target-min);
+    margin-inline: calc(var(--space-1) * -1);
+    padding: calc((var(--target-min) - 1em * var(--lh-body)) / 2) var(--space-1);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+}
+.choice:hover,
+.choice.is-hover { background: var(--green-100); }
+.choice input {
+    flex: none;
+    width: var(--choice-size);
+    height: var(--choice-size);
+    margin: calc((1em * var(--lh-body) - var(--choice-size)) / 2) 0 0;
+    accent-color: var(--green-600);
+    cursor: inherit;
+}
+/* Error: a dashed red ring on the control as well as the message. Dashed, so it
+   never looks like the solid focus ring (colour blindness, forced colours).
+   For a group, link the error from the fieldset's aria-describedby. */
+.choice input[aria-invalid="true"] { outline: 2px dashed var(--error); outline-offset: 2px; }
+.choice input[aria-invalid="true"]:focus-visible { outline: 2px solid var(--focus); }
+.choice:has(input:disabled) { color: var(--text-muted); cursor: not-allowed; }
+.choice:has(input:disabled):hover { background: transparent; }
+
+
+/* 11. TABS — switch between views of one topic (WAI-ARIA tabs:
+   tablist / tab / tabpanel). ui.js handles selection and arrow keys;
+   without it every panel shows. aria-disabled="true" makes a tab
+   unavailable: muted, skipped by the keyboard, not selectable. */
+/* Tabs wrap onto a second row rather than scroll, so none hides off-screen on phones. */
+.tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: var(--space-1);
+    border-bottom: 1px solid var(--border);
+}
+
+/* No nowrap: a long label wraps inside its tab instead of widening the page. */
+.tabs__tab {
+    min-height: var(--target-min);
+    padding: 0 var(--space-2);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+}
+.tabs__tab:hover,
+.tabs__tab.is-hover { text-decoration: underline; }
+.tabs__tab[aria-selected="true"] {
+    background: var(--green-100);
+    color: var(--green-900);
+    font-weight: var(--fw-semibold);
+    box-shadow: inset 0 0 0 1px var(--green-600);
+    text-decoration: none;
+}
+.tabs__tab[aria-disabled="true"] { color: var(--text-muted); text-decoration: none; cursor: not-allowed; }
+
+/* Without ui.js the tabs cannot work, so hide them: the panels stack and each
+   starts with its own heading. */
+html:not(.js) .tabs__list { display: none; }
+
+.tabs__panel { padding-top: var(--space-3); }
+.tabs__panel > :last-child { margin-bottom: 0; }
+
+
+/* 12. ACCORDION — FAQs and other show-on-demand content. Native
+   <details>/<summary>: keyboard and screen-reader support with no script,
+   and find-in-page opens it. The question goes in the summary. */
+.accordion { border-top: 1px solid var(--border); }
+.accordion__item { border-bottom: 1px solid var(--border); }
+
+.accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: var(--target-min);
+    padding: var(--space-2) 0;
+    font-weight: var(--fw-semibold);
+    list-style: none;
+    cursor: pointer;
+}
+.accordion__summary::-webkit-details-marker { display: none; }
+.accordion__summary:hover,
+.accordion__summary.is-hover { color: var(--green-700); }
+.accordion__item[open] .accordion__icon { rotate: 180deg; }
+
+.accordion__body { padding-bottom: var(--space-3); }
+.accordion__body > :last-child { margin-bottom: 0; }
+
+
+/* 13. MODAL — a native <dialog> opened with showModal(): give the opening
+   button data-modal-open="dialog-id". The browser traps focus, closes on
+   Escape and returns focus to the opener; Close and Cancel are buttons in
+   a <form method="dialog">. Use a dialog only to confirm an action. The
+   header, body and footer cover the whole box, so a click on the dialog
+   element itself is a backdrop click.
+   Without JS the opener does nothing. Before a dialog guards a real form,
+   make the opener that form's submit button (see the spec, section 15). */
+.modal {
+    --modal-pad: var(--space-2);  /* 24px from 768px */
+    width: min(100% - 2 * var(--space-2), var(--modal-width));
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+.modal::backdrop { background: var(--overlay); }
+@media (min-width: 768px) { .modal { --modal-pad: var(--space-3); } }
+html:has(dialog:modal) { overflow: hidden; }
+
+.modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--modal-pad) var(--modal-pad) 0;
+}
+.modal__title { margin: 0; }
+
+.modal__body { padding: var(--space-2) var(--modal-pad); }
+.modal__body > :last-child { margin-bottom: 0; }
+
+/* Phones: full-width buttons stacked in DOM order; from 768px a right-aligned row. */
+.modal__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: 0 var(--modal-pad) var(--modal-pad);
+}
+@media (min-width: 768px) {
+    .modal__footer { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; }
+}
+
+
+/* ==============================================================
+   PHASE 2: SITE COMPONENTS (sections 14 to 32)
+   Built for the PHP pages; tokens only, same rules as above.
+   ============================================================== */
+
+
+/* 14. SITE HEADER EXTENSIONS — the short brand on phones and the language
+   toggle. The sticky header, the Search link and the nav row are in section 3. */
+/* Brand: logo only below 360px, logo + "DSWD" up to 768px, then the full
+   name. The link's aria-label always gives the full name. */
+.brand__short { display: none; white-space: nowrap; }
+.brand--short-on-phones .brand__name { display: none; }
+@media (min-width: 360px) {
+    .brand--short-on-phones .brand__short { display: inline; }
+}
+@media (min-width: 768px) {
+    .brand--short-on-phones .brand__short { display: none; }
+    .brand--short-on-phones .brand__name { display: inline; }
+}
+
+.lang-toggle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-1);
+    margin: var(--space-1) 0 0;
+    font-size: var(--fs-small);
+}
+.lang-toggle__label { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--text-muted); }
+.lang-toggle__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-min);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+}
+.lang-toggle__link:hover,
+.lang-toggle__link.is-hover { color: var(--green-700); text-decoration: underline; }
+.lang-toggle__link[aria-current] {
+    background: var(--green-100);
+    color: var(--green-900);
+    font-weight: var(--fw-semibold);
+    box-shadow: inset 0 0 0 1px var(--green-600);
+    text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+    .lang-toggle { margin: 0; }
+}
+
+
+/* 15. TITLE BAND — the top of every page: breadcrumbs, the one H1, a lead
+   sentence and, when it belongs at the top, the page's one primary action.
+   .title-band--hero is the home page version with the search form. */
+.title-band { padding-block: var(--space-3) var(--space-5); background: var(--green-100); }
+.title-band .breadcrumb { margin-bottom: var(--space-2); }
+.title-band__title { margin: 0; color: var(--green-900); }
+.title-band__lead { margin: var(--space-2) 0 0; font-size: var(--fs-h4); line-height: var(--lh-body); }
+.title-band__meta { margin: var(--space-2) 0 0; color: var(--text-muted); }
+.title-band .btn { margin-top: var(--space-3); }
+.title-band--hero { padding-block: var(--space-5) var(--space-6); }
+
+
+/* 16. SEARCH FORM — a labelled field and its button: stacked on phones,
+   side by side from 768px. Put role="search" on the form. */
+.search-form { max-width: var(--form-width); margin-top: var(--space-3); }
+.search-form__label { display: block; margin-bottom: var(--space-1); font-weight: var(--fw-medium); }
+.search-form__row { display: flex; flex-direction: column; gap: var(--space-1); }
+.title-band .search-form .btn { margin-top: 0; }
+@media (min-width: 768px) {
+    .search-form__row { flex-direction: row; }
+    .search-form__row .input { flex: 1; }
+}
+
+
+/* 17. FILTERS — a GET form above a list. Fields sit in a row from 768px,
+   and it works without JavaScript. Give the form an aria-label. */
+.filters {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+.filters .field + .field { margin-top: 0; }
+.filters__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+@media (min-width: 768px) {
+    .filters { grid-template-columns: repeat(auto-fit, minmax(calc(var(--space-6) * 3), 1fr)); align-items: end; }
+}
+.results-count { margin-bottom: var(--space-2); color: var(--text-muted); }
+
+
+/* 18. LINK CARD — a card that is one big link: the title link stretches
+   over the whole card, so it is one Tab stop and one large target. */
+.card--link { position: relative; display: flex; flex-direction: column; gap: var(--space-1); }
+.card--link .card__title { margin: 0; }
+.card--link .card__title a::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+.card--link:hover,
+.card--link.is-hover { border-color: var(--green-600); }
+.card--link:has(a:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.card--link .card__title a:focus-visible { outline: none; }
+.card--link p { margin: 0; }
+.card__icon { color: var(--green-600); }
+.card__meta { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+
+
+/* 19. SECTION HEAD — a section H2 with an optional "See all" link. */
+.section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+    margin-bottom: var(--space-3);
+}
+.section-head > h2 { margin: 0; }
+.section-head a { display: inline-block; padding-block: calc((var(--target-min) - 1em * var(--lh-body)) / 2); }
+
+
+/* 20. MEDIA LIST — news and announcements: optional image, then meta, the
+   title link and a short excerpt. Images below the first screen load lazily. */
+.media-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.media { display: grid; gap: var(--space-2); align-items: start; }
+.media:has(.media__image) { grid-template-columns: calc(var(--space-6) + var(--space-4)) minmax(0, 1fr); }  /* 96px thumbnail on phones */
+@media (min-width: 768px) {
+    .media:has(.media__image) { grid-template-columns: calc(var(--space-6) * 3) minmax(0, 1fr); }
+}
+.media__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+.media__title { margin: 0; font-size: var(--fs-h4); }
+.media p { margin: var(--space-1) 0 0; }
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+    margin: 0 0 var(--space-1);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+}
+
+
+/* 21. TABLE OF CONTENTS — "On this page" links for long pages. */
+.toc { margin-bottom: var(--space-3); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); }
+.toc__title { margin: 0 0 var(--space-1); font-weight: var(--fw-semibold); }
+.toc ul { margin: 0; }
+.toc a { display: inline-block; padding-block: calc((var(--target-min) - 1em * var(--lh-body)) / 2); }
+
+
+/* 22. CHECKLIST — things to bring; each item starts with a check icon. */
+.checklist { display: grid; gap: var(--space-1); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.checklist li { display: flex; align-items: flex-start; gap: var(--space-1); }
+.checklist .icon { margin-top: calc((1em * var(--lh-body) - var(--icon)) / 2); color: var(--green-600); }
+
+
+/* 23. STEPS — numbered instructions. Add role="list" to the <ol> so screen
+   readers keep the list semantics without the default markers. */
+.steps { counter-reset: step; display: grid; gap: var(--space-2); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: var(--space-4) minmax(0, 1fr); gap: var(--space-2); align-items: start; }
+.steps li::before {
+    content: counter(step);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-4);
+    height: var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--green-100);
+    color: var(--green-900);
+    font-weight: var(--fw-semibold);
+}
+
+
+/* 24. FILE LIST — downloadable files with format and size, so readers
+   know what they get before they tap. */
+.file-list { display: grid; gap: var(--space-1); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.file-list a { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--target-min); }
+.file-list__meta { color: var(--text-muted); font-size: var(--fs-small); }
+
+
+/* 25. DETAILS — contact rows with an icon each (address, phone, email,
+   hours). Give each row a visually hidden label for screen readers. */
+.details { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.details li { display: flex; align-items: flex-start; gap: var(--space-1); }
+.details .icon { margin-top: calc((1em * var(--lh-body) - var(--icon)) / 2); color: var(--text-muted); }
+.details a { display: inline-flex; align-items: center; min-height: var(--target-min); }
+
+
+/* 26. PROSE — long text from the content system (articles, policies). */
+.prose img { max-width: 100%; height: auto; border-radius: var(--radius); }
+.prose ul, .prose ol { max-width: var(--measure); }
+
+
+/* 27. NOTE — neutral information, such as "this is sample content". Not
+   for feedback (use an alert) and never a colored side stripe. */
+.note {
+    margin-bottom: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: var(--fs-small);
+}
+.note > :last-child { margin-bottom: 0; }
+p.note { max-width: none; }
+
+
+/* 28. PERSON — an official: photo or placeholder, name and position. */
+.person { display: flex; align-items: center; gap: var(--space-2); }
+.person__photo {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--text-muted);
+    object-fit: cover;
+}
+.person__name { margin: 0; font-weight: var(--fw-semibold); }
+.person__position { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+
+
+/* 29. ORG TREE — an organizational chart as nested lists, so it reads in
+   order on every screen and to screen readers. */
+.org-tree { margin: 0; padding: 0; list-style: none; }
+.org-tree ul { margin: 0 0 0 var(--space-2); padding: 0 0 0 var(--space-3); border-left: 1px solid var(--border-strong); list-style: none; }
+.org-tree li { padding-block: var(--space-1); }
+.org-tree__unit {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    font-weight: var(--fw-medium);
+}
+
+
+/* 30. BAND — a full-width call to action between page sections. */
+.band { padding-block: var(--space-5); border-block: 1px solid var(--border); background: var(--surface); }
+.band__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.band h2 { margin: 0; }
+.band p { margin: var(--space-1) 0 0; }
+
+
+/* 31. EMPTY STATE — what to do when a list has nothing to show. */
+.empty { padding: var(--space-4) var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.empty__title { margin: 0 0 var(--space-1); font-weight: var(--fw-semibold); }
+.empty > :last-child { margin-bottom: 0; }
+
+
+/* 31b. FORM STACK — even 24px rhythm between the parts of a long form
+   (fieldsets, fields, notes, the submit row). */
+.form-stack > * + * { margin-top: var(--space-3); }
+.form-stack > .field + .field { margin-top: var(--space-3); }
+
+
+/* 32. PAGE BODY — vertical rhythm under the title band. */
+.page-body { padding-block: var(--space-5) var(--space-6); }
+.page-section + .page-section { margin-top: var(--space-6); }
+.page-section > :last-child { margin-bottom: 0; }
+
+
+
+/* ==============================================================
+   PHASE 3: ADMIN (section 33)
+   ============================================================== */
+
+/* 33. ADMIN — the staff dashboard: a sidebar of section links from 1024px,
+   the page beside it. Reuses .site-nav__link for the links, so the current
+   page has the same selected-state look as the public nav. */
+.admin-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0 var(--space-2);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+}
+.admin-bar form { margin: 0; }
+
+.admin-layout { padding-block: var(--space-4) var(--space-6); }
+.admin-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: 0 0 var(--space-4); padding: 0; list-style: none; }
+.admin-nav .site-nav__link { font-size: var(--fs-small); }
+
+@media (min-width: 1024px) {
+    .admin-layout:not(.admin-layout--single) {
+        display: grid;
+        grid-template-columns: calc(var(--space-6) * 4) minmax(0, 1fr);
+        gap: var(--space-5);
+        align-items: start;
+    }
+    .admin-nav ul { flex-direction: column; flex-wrap: nowrap; margin: 0; }
+}
+
+.admin-main--narrow { max-width: var(--form-width); }
+
+.page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+.page-head h1 { margin: 0; }
+
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+.form-actions form { margin: 0; }
+
+/* Label and value pairs, for example a feedback message's details. */
+.details-list { display: grid; gap: var(--space-1) var(--space-3); margin: 0 0 var(--space-3); }
+.details-list dt { font-weight: var(--fw-semibold); }
+.details-list dd { margin: 0; overflow-wrap: anywhere; }
+@media (min-width: 768px) {
+    .details-list { grid-template-columns: max-content minmax(0, 1fr); }
+}
+
+/* Rich text editor (js/admin.js). */
+.rte__toolbar { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-1); }
+.rte__area { min-height: calc(var(--space-6) * 4); line-height: var(--lh-body); }
+.rte__area > :last-child { margin-bottom: 0; }

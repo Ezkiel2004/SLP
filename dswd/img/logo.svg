@@ -1,0 +1,9 @@
+<!--
+  PLACEHOLDER — replace this file with the official DSWD seal (same file name, square artwork).
+  Using the seal needs DSWD authorisation. Used by the header, footer and browser tab icon.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logo placeholder">
+  <circle cx="32" cy="32" r="31" fill="#FFFFFF" stroke="#5A6760" stroke-width="2"/>
+  <circle cx="32" cy="32" r="25" fill="none" stroke="#DDE5E0" stroke-width="1"/>
+  <text x="32" y="36" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#5A6760">LOGO</text>
+</svg>

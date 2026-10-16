@@ -1,0 +1,15 @@
+{
+  "name": "slp-mswdo-monitoring-system",
+  "version": "1.0.0",
+  "description": "SLP MSWDO Monitoring System with Role Routing, Form Eligibility, and Security Controls",
+  "scripts": {
+    "test": "node --test tests/system.test.js"
+  },
+  "keywords": [
+    "slp",
+    "mswdo",
+    "monitoring-system"
+  ],
+  "author": "",
+  "license": "ISC"
+}

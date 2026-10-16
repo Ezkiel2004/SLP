@@ -1,0 +1,229 @@
+/* ==============================================================
+   SLP INFORMATION SYSTEM — DESIGN TOKENS
+   Single source of truth for every visual decision.
+
+   DESIGN SYSTEM: DSWD (October 2026). Visual reference:
+   design-system.html (served from dswd/design-system.html, which
+   also loads its CSS). Values below are the DSWD tokens; the token
+   NAMES are SLP's, so css/style.css keeps working.
+
+   RULES
+   - Components reference SEMANTIC tokens (--color-*, --space-*, ...),
+     never raw palette values. The palette exists only so the
+     semantic layer has something to point at.
+   - Do not add a new colour, size, or radius in a component file.
+     If a value is missing, add it here and document it in
+     docs/DESIGN-SYSTEM.md.
+   - Green and white only. Status colours (success, warning, error)
+     go on icons and borders, never on text, except error, which
+     may colour field-error text (5.62:1).
+   - Contrast ratios listed are WCAG 2.2 ratios against the surface
+     named in the comment.
+   ============================================================== */
+
+:root {
+
+    /* ----------------------------------------------------------
+       1. PALETTE (DSWD — do not use in components)
+       ---------------------------------------------------------- */
+
+    --green-900: #0F4A2C;   /* footer band, selected text. White on it 10.31:1 */
+    --green-700: #166039;   /* hover. White on it 7.59:1 */
+    --green-600: #1E7A4C;   /* primary, links. 5.33:1 on white, 4.71:1 on green-100 */
+    --green-100: #E8F4EC;   /* tint: hover, selected, current */
+    --white:     #FFFFFF;
+    --surface:   #F6F9F7;   /* table header, read-only fields */
+
+    --ink:          #1A2420;  /* text, 15.94:1 on white */
+    --ink-muted:    #5A6760;  /* 5.93:1 on white, 5.24:1 on green-100 */
+    --line:         #DDE5E0;  /* decorative borders (1.28:1), disabled fills */
+    --line-strong:  #5A6760;  /* form-control edges, 5.93:1 (WCAG 1.4.11 needs 3:1) */
+
+    --success-500: #1E8E5A;  /* 4.14:1: icon and border only, never text */
+    --warning-500: #C77700;  /* 3.46:1: icon and border only, never text */
+    --error-500:   #C62828;  /* 5.62:1: icon, border, field-error text; white on it 5.62:1 */
+    --error-700:   #A31F1F;  /* destructive button hover, white on it 7.13:1 (SLP addition) */
+
+
+    /* ----------------------------------------------------------
+       2. SEMANTIC COLOUR
+       ---------------------------------------------------------- */
+
+    /* Text */
+    --color-text:            var(--ink);
+    --color-text-secondary:  var(--ink-muted);
+    --color-text-disabled:   var(--ink-muted);
+    --color-text-inverse:    var(--white);
+    --color-text-selected:   var(--green-900);  /* text on the green-100 selected tint */
+    --color-text-brand:      var(--green-900);  /* agency name in the header */
+
+    /* Surfaces (DSWD: white pages, cards outlined, not floated on grey) */
+    --color-bg:              var(--white);
+    --color-surface:         var(--white);
+    --color-surface-muted:   var(--surface);
+    --color-surface-sunken:  var(--line);       /* disabled fields and buttons */
+
+    /* Borders */
+    --color-border:          var(--line);
+    --color-border-strong:   var(--line-strong);
+    --color-border-hover:    var(--ink);        /* control edge on hover */
+
+    /* Primary / interactive */
+    --color-primary:         var(--green-600);
+    --color-primary-hover:   var(--green-700);
+    --color-primary-active:  var(--green-900);
+    --color-primary-subtle:  var(--green-100);  /* selected nav item, tab, hover tint */
+    --color-primary-pressed: var(--green-100);
+    --color-primary-border:  var(--green-600);
+    --color-link:            var(--green-600);
+    --color-link-hover:      var(--green-700);
+    --color-focus:           var(--green-600);  /* focus ring, 5.33:1 on white */
+    --color-icon:            var(--green-600);
+
+    /* Sidebar: white, like the DSWD admin nav */
+    --color-sidebar:           var(--white);
+    --color-sidebar-text:      var(--ink);
+    --color-sidebar-heading:   var(--ink-muted);
+    --color-sidebar-hover:     transparent;
+    --color-sidebar-hover-text:var(--green-700);
+    --color-sidebar-active:    var(--green-100);
+
+    /* Footer: the DSWD green band */
+    --color-footer:            var(--green-900);
+    --color-footer-text:       var(--white);
+    --color-footer-muted:      var(--green-100);  /* 9.0:1 on green-900 */
+
+    /* Status: the colour sits on the icon and the 1px border; the
+       background stays white and the text stays --color-text. */
+    --color-success:         var(--success-500);
+    --color-success-bg:      var(--white);
+    --color-success-border:  var(--success-500);
+
+    --color-warning:         var(--warning-500);
+    --color-warning-bg:      var(--white);
+    --color-warning-border:  var(--warning-500);
+
+    --color-error:           var(--error-500);
+    --color-error-hover:     var(--error-700);
+    --color-error-bg:        var(--white);
+    --color-error-border:    var(--error-500);
+
+    /* Info is brand green: DSWD has no blue */
+    --color-info:            var(--green-600);
+    --color-info-bg:         var(--white);
+    --color-info-border:     var(--green-600);
+
+    /* Official form replicas (Annex G.1, AA, AC, AF.1) */
+    --color-paper-line:      var(--ink);        /* ruled lines, 15.94:1 on white */
+    --color-paper-shade:     var(--line);       /* shaded heads, e.g. personnel banner */
+
+    --color-overlay:         rgba(26, 36, 32, 0.5);  /* modal scrim: --ink at 50% */
+
+
+    /* ----------------------------------------------------------
+       3. TYPOGRAPHY — Inter only (self-hosted), three weights
+       ---------------------------------------------------------- */
+
+    --font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+
+    --font-size-12: 0.75rem;   /* 12px  OFFICIAL FORM REPLICAS ONLY (paper captions) */
+    --font-size-14: 0.875rem;  /* 14px  hints, metadata, badges: the smallest UI text */
+    --font-size-16: 1rem;      /* 16px  body, labels, buttons, inputs, tables      */
+    --font-size-20: 1.25rem;   /* 20px  card and section headings (h2)             */
+    --font-size-24: 1.5rem;    /* 24px  text stat values, sign-in title on phones (DSWD h3) */
+    --font-size-32: 2rem;      /* 32px  stat numbers, sign-in title                 */
+    --font-size-title: 2rem;   /* page title (h1): 32px, 40px from 768px (DSWD h1)  */
+
+    --line-height-12: 1rem;
+    --line-height-14: 1.25rem; /* 20px */
+    --line-height-16: 1.5rem;  /* 24px: body 1.5 */
+    --line-height-20: 1.5rem;  /* 24px */
+    --line-height-24: 2rem;    /* 32px */
+    --line-height-32: 1.2;
+    --line-height-title: 1.2;  /* headings 1.2 */
+    --line-height-control: 1.25;  /* single-line controls */
+
+    --font-weight-regular:  400;  /* body, table data, descriptions */
+    --font-weight-medium:   500;  /* labels, nav items, buttons     */
+    --font-weight-semibold: 600;  /* headings, selected states      */
+
+
+    /* ----------------------------------------------------------
+       4. SPACING — 8px scale (4px half-step for icon gaps only)
+       ---------------------------------------------------------- */
+
+    --space-half: 4px;
+    --space-1:    8px;
+    --space-2:    16px;
+    --space-3:    24px;
+    --space-4:    32px;
+    --space-5:    40px;
+    --space-6:    48px;
+    --space-8:    64px;
+
+
+    /* ----------------------------------------------------------
+       5. LAYOUT
+       Breakpoints (CSS variables cannot be used inside @media,
+       so these are documentation values mirrored in style.css):
+         sm  600px   phone → large phone / small tablet
+         md  900px   sidebar becomes persistent
+         lg  1200px  dashboard two-column layouts
+       ---------------------------------------------------------- */
+
+    --layout-max-width:   1280px;
+    --layout-form-width:  40rem;   /* 640px — readable single-column forms */
+    --layout-sidebar:     272px;
+    --layout-header:      72px;
+    --layout-gutter:      var(--space-3);  /* 12-col grid gap */
+    --layout-margin:      var(--space-2);  /* page side margin: 16 → 24 → 32 */
+    --card-padding:       var(--space-3);  /* 24px; 16px under 600px */
+
+    --target-min:         44px;    /* smallest tap target (WCAG 2.5.5 / 2.5.8) */
+    --control-height:     48px;    /* buttons, inputs, selects */
+    --btn-padding:        12px 24px;
+    --input-padding:      12px 16px;
+
+
+    /* ----------------------------------------------------------
+       6. SHAPE & ELEVATION
+       ---------------------------------------------------------- */
+
+    --radius:        16px;                           /* cards, fields, dialogs, alerts, tables */
+    --radius-round:  999px;                          /* pills: buttons, tabs, nav, badges, dots */
+    --border:        1px solid var(--color-border);  /* the ONLY border style */
+    --border-input:  1px solid var(--color-border-strong);
+
+    --elevation-1:   0 1px 3px rgba(0, 0, 0, 0.06);  /* cards, toasts, the dialog (DSWD --shadow) */
+    --elevation-2:   0 1px 3px rgba(0, 0, 0, 0.06);
+
+    --focus-ring:    2px solid var(--color-focus);
+    --focus-offset:  2px;
+
+
+    /* ----------------------------------------------------------
+       7. MOTION — none (DSWD: no transitions or animations)
+       ---------------------------------------------------------- */
+
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --easing:        linear;
+
+
+    /* ----------------------------------------------------------
+       8. Z-INDEX
+       ---------------------------------------------------------- */
+
+    --z-sticky:   10;
+    --z-header:   30;
+    --z-drawer:   40;
+    --z-modal:    50;
+    --z-alert:    60;   /* confirmation / session dialogs above modals */
+    --z-toast:    70;
+}
+
+@media (min-width: 768px) {
+    :root {
+        --font-size-title: 2.5rem;   /* page title 40px */
+    }
+}

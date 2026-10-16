@@ -1,0 +1,21 @@
+PASS schema imports with no warnings
+PASS object counts
+PASS 16 barangays, 8 poblacion
+PASS poblacion flags
+PASS 7 livelihood types
+PASS installer refuses existing database
+PASS installer refuses non-slp names
+PASS run_sql_file stops at a bad statement
+PASS run_sql_file ignores semicolons in comments and strings
+PASS run_sql_file stops on a warning
+PASS connection uses +08:00
+PASS strict mode rejects bad enum and long text
+PASS utf8mb4 round-trips ñ
+PASS demo counts
+PASS every association has a leader and 2+ members
+PASS same livelihood, different barangays
+PASS demo passwords
+PASS user_roles for demo accounts
+PASS stored files match their hashes
+PASS storage is not web-readable
+20 passed, 0 failed

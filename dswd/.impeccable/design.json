@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T14:56:52.949Z",
+  "title": "Design System: DSWD Design System",
+  "extensions": {
+    "colorMeta": {
+      "green-900": {
+        "role": "primary",
+        "displayName": "Forest Ink",
+        "canonical": "#0F4A2C",
+        "tonalRamp": [
+          "#062314",
+          "#0F4A2C",
+          "#166039",
+          "#1E7A4C",
+          "#4F9A72",
+          "#8CC2A3",
+          "#C4E2D0",
+          "#E8F4EC"
+        ]
+      },
+      "green-700": {
+        "role": "primary",
+        "displayName": "Deep Pine",
+        "canonical": "#166039",
+        "tonalRamp": [
+          "#062314",
+          "#0F4A2C",
+          "#166039",
+          "#1E7A4C",
+          "#4F9A72",
+          "#8CC2A3",
+          "#C4E2D0",
+          "#E8F4EC"
+        ]
+      },
+      "green-600": {
+        "role": "primary",
+        "displayName": "Civic Green",
+        "canonical": "#1E7A4C",
+        "tonalRamp": [
+          "#062314",
+          "#0F4A2C",
+          "#166039",
+          "#1E7A4C",
+          "#4F9A72",
+          "#8CC2A3",
+          "#C4E2D0",
+          "#E8F4EC"
+        ],
+        "note": "Also the --focus ring colour (white inside the footer)."
+      },
+      "green-100": {
+        "role": "primary",
+        "displayName": "Mint Wash",
+        "canonical": "#E8F4EC",
+        "tonalRamp": [
+          "#062314",
+          "#0F4A2C",
+          "#166039",
+          "#1E7A4C",
+          "#4F9A72",
+          "#8CC2A3",
+          "#C4E2D0",
+          "#E8F4EC"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Sage Mist",
+        "canonical": "#F6F9F7",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "canonical": "#1A2420",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Field Grey",
+        "canonical": "#5A6760",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#DDE5E0",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Control Edge",
+        "canonical": "#5A6760",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      },
+      "success": {
+        "role": "status",
+        "displayName": "Success",
+        "canonical": "#1E8E5A",
+        "tonalRamp": [
+          "#0B3A24",
+          "#11563A",
+          "#17714B",
+          "#1E8E5A",
+          "#4FAA7E",
+          "#88C7A6",
+          "#C1E3CF",
+          "#EAF6EF"
+        ],
+        "note": "Icons and borders only; never text."
+      },
+      "warning": {
+        "role": "status",
+        "displayName": "Warning",
+        "canonical": "#C77700",
+        "tonalRamp": [
+          "#3D2400",
+          "#5E3800",
+          "#8F5500",
+          "#C77700",
+          "#DE9A3A",
+          "#ECBD7A",
+          "#F6DDB5",
+          "#FDF3E4"
+        ],
+        "note": "Icons and borders only; never text."
+      },
+      "error": {
+        "role": "status",
+        "displayName": "Error",
+        "canonical": "#C62828",
+        "tonalRamp": [
+          "#3E0C0C",
+          "#5E1212",
+          "#8F1C1C",
+          "#C62828",
+          "#DB5C5C",
+          "#E99595",
+          "#F5C9C9",
+          "#FDEDED"
+        ],
+        "note": "Icons, borders and field-error text."
+      },
+      "overlay": {
+        "role": "neutral",
+        "displayName": "Dialog Scrim",
+        "canonical": "rgba(26, 36, 32, 0.5)",
+        "tonalRamp": [
+          "#1A2420",
+          "#2E3A35",
+          "#44514B",
+          "#5A6760",
+          "#8A958F",
+          "#B9C4BE",
+          "#DDE5E0",
+          "#F6F9F7"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "h1": {
+        "displayName": "H1",
+        "purpose": "Page title, one per page. 32px on phones."
+      },
+      "h1-tablet-up": {
+        "displayName": "H1 (768px+)",
+        "purpose": "Page title from 768px."
+      },
+      "h2": {
+        "displayName": "H2",
+        "purpose": "Page sections. 28px on phones."
+      },
+      "h2-tablet-up": {
+        "displayName": "H2 (768px+)",
+        "purpose": "Page sections from 768px."
+      },
+      "h3": {
+        "displayName": "H3",
+        "purpose": "Sub-sections."
+      },
+      "h4": {
+        "displayName": "H4",
+        "purpose": "Card titles and small groups."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All running text; paragraphs max --measure (36em, about 72 characters)."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Hints, breadcrumbs, footer bottom line."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, nav links, tabs, pagination, field labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "rest",
+        "value": "0 1px 3px rgba(0, 0, 0, 0.06)",
+        "purpose": "Cards and the modal only."
+      },
+      {
+        "name": "selected-ring",
+        "value": "inset 0 0 0 1px #1E7A4C",
+        "purpose": "Current nav link and selected tab, with the green-100 tint."
+      },
+      {
+        "name": "invalid-ring",
+        "value": "inset 0 0 0 1px #C62828",
+        "purpose": "Doubles an invalid input's red border to 2px."
+      }
+    ],
+    "focus": [
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid var(--focus); outline-offset: 2px",
+        "purpose": "Every focusable element. --focus is green-600, white inside the footer."
+      },
+      {
+        "name": "invalid-choice",
+        "value": "outline: 2px dashed #C62828; outline-offset: 2px",
+        "purpose": "Invalid checkbox or radio; dashed so it never reads as focus. Solid focus ring wins on focus."
+      }
+    ],
+    "motion": [
+      {
+        "name": "none",
+        "value": "none",
+        "purpose": "No transitions or animations anywhere. The accordion chevron flips 180deg instantly."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "360px",
+        "purpose": "Button groups become a wrapping row."
+      },
+      {
+        "name": "md",
+        "value": "768px",
+        "purpose": "Larger H1/H2, wider padding and gap, span-md-*, full pagination, modal footer row."
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "purpose": "Desktop nav row, span-lg-*."
+      }
+    ],
+    "layout": {
+      "container": "1200px",
+      "columns": 12,
+      "gridGap": "16px; 24px from 768px",
+      "pagePadding": "16px; 24px from 768px; 32px from 1024px",
+      "modalWidth": "560px",
+      "controlHeight": "48px",
+      "targetMin": "44px",
+      "choiceSize": "20px",
+      "icon": "20px",
+      "iconLarge": "24px"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action in an area. Label starts with a verb.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Apply now<svg class=\"ds-icon\" viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--radius-pill, 999px); font: 500 1rem/1.25 var(--font-sans, Inter, system-ui, sans-serif); text-decoration: none; cursor: pointer; background: var(--green-600, #1E7A4C); border-color: var(--green-600, #1E7A4C); color: var(--white, #FFFFFF); } .ds-btn-primary:hover { background: var(--green-700, #166039); border-color: var(--green-700, #166039); } .ds-btn-primary:active { background: var(--green-900, #0F4A2C); border-color: var(--green-900, #0F4A2C); } .ds-btn-primary:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; } .ds-btn-primary:disabled { background: var(--border, #DDE5E0); border-color: var(--border, #DDE5E0); color: var(--text-muted, #5A6760); cursor: not-allowed; } .ds-icon { flex: none; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting actions beside a primary.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Download form</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--radius-pill, 999px); font: 500 1rem/1.25 var(--font-sans, Inter, system-ui, sans-serif); text-decoration: none; cursor: pointer; background: var(--white, #FFFFFF); border-color: var(--green-600, #1E7A4C); color: var(--green-600, #1E7A4C); } .ds-btn-secondary:hover { background: var(--green-100, #E8F4EC); border-color: var(--green-700, #166039); color: var(--green-700, #166039); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Low-emphasis actions such as the header Menu toggle.",
+      "html": "<button class=\"ds-btn-ghost\" type=\"button\"><svg class=\"ds-icon\" viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 5h16\"/><path d=\"M4 12h16\"/><path d=\"M4 19h16\"/></svg>Menu</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--radius-pill, 999px); font: 500 1rem/1.25 var(--font-sans, Inter, system-ui, sans-serif); text-decoration: none; cursor: pointer; background: transparent; color: var(--green-600, #1E7A4C); } .ds-btn-ghost:hover { background: var(--green-100, #E8F4EC); color: var(--green-700, #166039); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; } .ds-icon { flex: none; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled field with a 1px control edge; hint and error sit above the control.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-name\">Full Name <span class=\"ds-req\">(required)</span></label><p class=\"ds-hint\">As written on your ID.</p><input class=\"ds-input\" id=\"ds-name\" type=\"text\"></div>",
+      "css": ".ds-field { display: grid; gap: 8px; font-family: var(--font-sans, Inter, system-ui, sans-serif); color: var(--text, #1A2420); } .ds-label { font-weight: 500; } .ds-req { font-weight: 400; } .ds-hint { margin: 0; font-size: 0.875rem; color: var(--text-muted, #5A6760); } .ds-input { min-height: 48px; padding: 12px 16px; border: 1px solid var(--border-strong, #5A6760); border-radius: var(--radius, 16px); background: var(--white, #FFFFFF); color: var(--text, #1A2420); font: 400 1rem/1.25 var(--font-sans, Inter, system-ui, sans-serif); } .ds-input:hover { border-color: var(--text, #1A2420); } .ds-input:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; } .ds-input[aria-invalid=\"true\"] { border-color: var(--error, #C62828); box-shadow: inset 0 0 0 1px var(--error, #C62828); } .ds-input:disabled { background: var(--border, #DDE5E0); border-color: var(--border, #DDE5E0); color: var(--text-muted, #5A6760); cursor: not-allowed; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Pill nav links; the current page gets tint, ring and 600 weight.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a class=\"ds-nav-link\" href=\"#\" aria-current=\"page\">Home</a><a class=\"ds-nav-link\" href=\"#\">Programs and services</a><a class=\"ds-nav-link\" href=\"#\">Contact us</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-sans, Inter, system-ui, sans-serif); } .ds-nav-link { display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--radius-pill, 999px); color: var(--text, #1A2420); font-weight: 500; text-decoration: none; } .ds-nav-link:hover { color: var(--green-700, #166039); text-decoration: underline; } .ds-nav-link[aria-current=\"page\"] { background: var(--green-100, #E8F4EC); color: var(--green-900, #0F4A2C); font-weight: 600; box-shadow: inset 0 0 0 1px var(--green-600, #1E7A4C); } .ds-nav-link:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; }"
+    },
+    {
+      "name": "Tabs",
+      "kind": "chip",
+      "refersTo": "tab",
+      "description": "Pill tabs that wrap; the selected tab uses the tint-and-ring state.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\" aria-label=\"Program details\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Overview</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">Who can apply</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">How to apply</button></div>",
+      "css": ".ds-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; border-bottom: 1px solid var(--border, #DDE5E0); } .ds-tab { min-height: 44px; padding: 0 16px; border: 0; border-radius: var(--radius-pill, 999px); background: transparent; color: var(--text, #1A2420); font: 500 1rem/1.25 var(--font-sans, Inter, system-ui, sans-serif); cursor: pointer; } .ds-tab:hover { text-decoration: underline; } .ds-tab[aria-selected=\"true\"] { background: var(--green-100, #E8F4EC); color: var(--green-900, #0F4A2C); font-weight: 600; box-shadow: inset 0 0 0 1px var(--green-600, #1E7A4C); text-decoration: none; } .ds-tab:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Groups one topic. Only the title link is interactive; never nested.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\"><a href=\"#\">Sustainable Livelihood Program</a></h3><p>Capacity building that helps poor families start or grow a livelihood.</p></article>",
+      "css": ".ds-card { padding: 24px; background: var(--white, #FFFFFF); border: 1px solid var(--border, #DDE5E0); border-radius: var(--radius, 16px); box-shadow: var(--shadow, 0 1px 3px rgba(0, 0, 0, 0.06)); font: 400 1rem/1.5 var(--font-sans, Inter, system-ui, sans-serif); color: var(--text, #1A2420); } .ds-card p { margin: 0; } .ds-card-title { margin: 0 0 8px; font-size: 1.25rem; font-weight: 600; line-height: 1.2; } .ds-card-title a { color: var(--green-600, #1E7A4C); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; } .ds-card-title a:hover { color: var(--green-700, #166039); text-decoration-thickness: 2px; } .ds-card-title a:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; }"
+    },
+    {
+      "name": "Success Alert",
+      "kind": "custom",
+      "refersTo": "alert",
+      "description": "Feedback message: status colour on the border and icon only; text stays slate ink.",
+      "html": "<div class=\"ds-alert\"><svg class=\"ds-icon\" viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m16 9-5.5 5.5L8 12\"/></svg><div><p class=\"ds-alert-title\">Application sent</p><p>[Reference number]</p></div></div>",
+      "css": ".ds-alert { display: flex; align-items: flex-start; gap: 16px; padding: 16px 24px; background: var(--white, #FFFFFF); border: 1px solid var(--success, #1E8E5A); border-radius: var(--radius, 16px); color: var(--text, #1A2420); font: 400 1rem/1.5 var(--font-sans, Inter, system-ui, sans-serif); } .ds-alert .ds-icon { flex: none; color: var(--success, #1E8E5A); } .ds-alert p { margin: 0; } .ds-alert-title { font-weight: 600; }"
+    },
+    {
+      "name": "Pagination",
+      "kind": "nav",
+      "refersTo": "pagination-link",
+      "description": "Pill page links; the current page is a solid green fill.",
+      "html": "<nav class=\"ds-pages\" aria-label=\"Pagination\"><a class=\"ds-page\" href=\"#\" aria-label=\"Page 1\">1</a><a class=\"ds-page\" href=\"#\" aria-label=\"Page 2\" aria-current=\"page\">2</a><a class=\"ds-page\" href=\"#\" aria-label=\"Page 3\">3</a></nav>",
+      "css": ".ds-pages { display: flex; gap: 8px; font-family: var(--font-sans, Inter, system-ui, sans-serif); } .ds-page { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 8px; border-radius: var(--radius-pill, 999px); color: var(--green-600, #1E7A4C); font-weight: 500; text-decoration: none; } .ds-page:hover { background: var(--green-100, #E8F4EC); color: var(--green-700, #166039); } .ds-page[aria-current=\"page\"] { background: var(--green-600, #1E7A4C); color: var(--white, #FFFFFF); } .ds-page:focus-visible { outline: 2px solid var(--focus, #1E7A4C); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Public Counter",
+    "overview": "A clean, well-lit government service counter: white, orderly, staffed in green, where every sign is plain and every action is within reach. The system is a reference kit for the DSWD website. Every page is built only from these tokens and components, so a citizen on a low-end phone over slow mobile data meets the same calm, trustworthy surface on every page.\n\nDensity is relaxed and generous: 48px controls, 44px minimum targets, 16px body text at a 1.5 line height, and paragraphs capped at 70ch. Depth is nearly flat: a hairline border and one faint shadow. Nothing moves except what the browser itself animates. Restraint is how the system shows it is official and non-partisan.\n\nThe system rejects the government-portal template of hero banners, carousels and icon-tile grids, and it rejects decoration in general: no gradients, no transitions or animations, no heavy shadows.",
+    "keyCharacteristics": [
+      "Green and white only; status colours appear only in feedback, on icons and borders.",
+      "Inter alone, at weights 400, 500 and 600.",
+      "Pills for every action, 16px-rounded boxes for everything that holds content or input.",
+      "One 2px focus ring everywhere, offset 2px.",
+      "Native HTML first (`<details>`, `<dialog>`, native checkboxes and selects); `ui.js` only enhances.",
+      "Tokens only: every colour and size comes from `css/tokens.css`."
+    ],
+    "rules": [
+      {
+        "name": "The Green-and-White Rule",
+        "body": "The brand is green-600/700/900, green-100 and white. No other hue appears outside feedback. No gradients.",
+        "section": "colors"
+      },
+      {
+        "name": "The Feedback-Only Rule",
+        "body": "Status colours appear only on icons and 1px borders inside feedback messages. Success (4.14:1) and warning (3.46:1) are never text. Error is the one status colour allowed as text, and only in a field error message.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tint Is Not Enough Rule",
+        "body": "The green-100 tint is 1.12:1 against white, so a selected or current state always adds green-900 text, 600 weight and a 1px inset green-600 ring.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Weights Rule",
+        "body": "400 for reading, 500 for things you press or label, 600 for headings and for selected or current states. No other weights.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Inter only. No system display face, no second font, no icon font.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": "The rest shadow is the only drop shadow, and only cards and the modal carry it. No hover lifts, no heavier shadows, no offset shadows.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Still Surface Rule",
+        "body": "No transitions and no animations. State changes are instant. The accordion chevron flips 180° with no motion.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every colour, size, radius and shadow from `css/tokens.css`; if a value is missing, add a commented token there.",
+      "Do load `tokens.css`, `base.css`, `components.css` in that order, then `ui.js` with `defer`.",
+      "Do use pills (999px) for actions and position markers, and the 16px radius for cards, fields, alerts, tables and modals.",
+      "Do give every form control a 1px border-strong edge, and use the hairline only for decorative lines.",
+      "Do mark a selected or current state with green-100, green-900 text, 600 weight and a 1px inset green-600 ring.",
+      "Do keep controls 48px tall and every target at least 44 × 44px.",
+      "Do show focus with the one 2px solid ring offset 2px; set `--focus` to white on any dark green ground.",
+      "Do drive state with native pseudo-classes and ARIA attributes (`:hover`, `:disabled`, `aria-invalid`, `aria-current`, `aria-selected`, `aria-expanded`, `[open]`).",
+      "Do put a Lucide icon next to visible text, and pair every colour cue with text or an icon.",
+      "Do use bracketed placeholders for content the agency has not supplied."
+    ],
+    "donts": [
+      "Don't use success or warning colours as text, or any status colour outside a feedback message.",
+      "Don't add hues beyond the green family and white, or any gradient.",
+      "Don't add transitions, animations, hover lifts or shadows beyond the rest shadow on cards and the modal.",
+      "Don't use a second font, a system display face or an icon font.",
+      "Don't make a whole card clickable, or nest cards.",
+      "Don't hide navigation or content behind script that may never run; collapse only under `html.js`.",
+      "Don't use the `ds-*` preview classes or the `.is-hover`, `.is-focus`, `.is-current` state classes on real pages.",
+      "Don't build hero banners, carousels or icon-tile grids.",
+      "Don't show officials' names or photos, political branding, or the official seal without DSWD authorisation."
+    ]
+  }
+}

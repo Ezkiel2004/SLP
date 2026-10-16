@@ -1,0 +1,58 @@
+# Site-wide rules (XAMPP: AllowOverride All in httpd.conf).
+Options -Indexes
+
+# Never serve hidden files or folders (.impeccable, .git, .env), source docs, SQL, logs or backups.
+RedirectMatch 404 "/\.(?!well-known)"
+<FilesMatch "\.(?i:sql|bak|log|ini|bat|sh|md|lock)$">
+    Require all denied
+</FilesMatch>
+
+# Include files such as admin/_init.php are never pages.
+<FilesMatch "^_.*\.php$">
+    Require all denied
+</FilesMatch>
+
+# Caching. asset() in includes/functions.php adds ?v=<last change> to CSS, JS
+# and images, so browsers may keep those URLs for a year; the font never
+# changes. Other static files are checked on each use (a quick 304 when unchanged).
+<IfModule mod_headers.c>
+    <If "%{REQUEST_URI} =~ m#\.woff2$# || (%{QUERY_STRING} =~ /^v=\d+$/ && %{REQUEST_URI} =~ m#\.(css|js|svg|png|jpe?g|ico)(\.gz)?$#)">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+    <ElseIf "%{REQUEST_URI} =~ m#\.(css|js|svg|png|jpe?g|ico|pdf)(\.gz)?$#">
+        Header set Cache-Control "no-cache"
+    </ElseIf>
+</IfModule>
+
+# Compressed CSS and JS bundles: tools/build-assets.php writes a .gz copy of each
+# .min file, sent to browsers that accept gzip. Works without mod_deflate; needs
+# mod_headers so the browser is told the file is compressed.
+<IfModule mod_headers.c>
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{HTTP:Accept-Encoding} \bgzip\b
+        RewriteCond %{REQUEST_FILENAME}.gz -f
+        RewriteRule ^(.+\.min\.(?:css|js))$ $1.gz [L]
+    </IfModule>
+    <FilesMatch "\.min\.(css|js)\.gz$">
+        Header set Content-Encoding gzip
+    </FilesMatch>
+    <FilesMatch "\.min\.(css|js)(\.gz)?$">
+        SetEnv no-gzip 1
+        Header append Vary Accept-Encoding
+    </FilesMatch>
+</IfModule>
+<FilesMatch "\.min\.css\.gz$">
+    ForceType text/css
+</FilesMatch>
+<FilesMatch "\.min\.js\.gz$">
+    ForceType text/javascript
+</FilesMatch>
+
+# Compression for the other CSS, JS and SVG files (PHP compresses pages and JSON
+# itself). XAMPP ships deflate_module and filter_module commented out in httpd.conf.
+<IfModule mod_deflate.c>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE text/css text/javascript application/javascript image/svg+xml text/plain
+    </IfModule>
+</IfModule>

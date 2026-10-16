@@ -1,0 +1,14 @@
+PASS schema imports with no warnings
+PASS object counts
+PASS 16 barangays, 8 poblacion
+PASS poblacion flags
+PASS 7 livelihood types
+PASS installer refuses existing database
+PASS installer refuses non-slp names
+PASS run_sql_file stops at a bad statement
+PASS run_sql_file ignores semicolons in comments and strings
+PASS run_sql_file stops on a warning
+PASS connection uses +08:00
+PASS strict mode rejects bad enum and long text
+PASS utf8mb4 round-trips ñ
+13 passed, 0 failed

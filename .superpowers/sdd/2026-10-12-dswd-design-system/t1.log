@@ -1,0 +1,13 @@
+PASS no sideways scroll at 320px
+PASS no sideways scroll at 360px
+PASS no sideways scroll at 768px
+PASS no sideways scroll at 1024px
+PASS no sideways scroll at 1440px
+PASS one h1 and every nav is labelled
+PASS every id reference resolves
+PASS every control and link has an accessible name
+PASS skip link is the first Tab stop and moves focus to main
+PASS every Tab stop shows a 2px focus outline
+PASS success and warning colors are never text colors
+PASS Inter loads from the page itself
+12/12 passed

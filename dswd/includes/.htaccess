@@ -1,0 +1,2 @@
+# Includes are loaded by the pages, never requested directly.
+Require all denied

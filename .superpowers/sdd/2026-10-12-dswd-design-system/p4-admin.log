@@ -1,0 +1,26 @@
+PASS wrong password gets one generic message
+PASS sign-in is rate limited after 5 failures
+PASS session cookie is HttpOnly and SameSite=Strict
+PASS signing out needs a POST; a plain link does not sign out
+PASS every admin page sends signed-out visitors to sign in
+PASS viewers and editors get 403 on staff-only pages
+PASS viewer can look but not add, change or open feedback
+PASS editor drafts stay off the site until a publisher publishes them
+PASS rich text is cleaned on save
+PASS a POST without the CSRF token is refused
+PASS uploads accept a real PDF and refuse a disguised script
+PASS photos are stored without location or owner details and stay upright
+PASS PNG files lose their text chunks and anything hidden after the image
+PASS big photos are scaled to 1600 pixels in the browser before upload
+PASS without JavaScript the server asks for a smaller photo
+PASS new accounts must change the temporary password first
+PASS audit log records sign-ins, publishing and deletes
+PASS contact form gives a reference number, and only publishers see the message
+PASS contact form explains every error after an empty submission
+PASS feedback API needs the token and returns a reference number
+PASS resolved feedback past the retention period is deleted; open requests stay
+PASS admin/dashboard.php at 1024px: one h1, names, ids, no sideways scroll
+PASS admin/programs.php at 360px: one h1, names, ids, no sideways scroll
+PASS admin/programs.php?action=edit&id=2 at 1024px: one h1, names, ids, no sideways scroll
+PASS admin edit page: every Tab stop shows a focus ring
+25/25 passed

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Library | SLP Information System</title>
+    <link rel="preload" href="../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- The gallery uses the PRODUCTION stylesheets — what you see is what ships. -->
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Documentation-page layout only. Not part of the design system. */
+        .doc { max-width: 1100px; margin: 0 auto; padding: var(--space-4) var(--space-2) var(--space-8); }
+        .doc > section { margin-top: var(--space-6); }
+        .doc h2 { margin-bottom: var(--space-1); }
+        .doc .lead { color: var(--color-text-secondary); margin-bottom: var(--space-3); max-width: 70ch; }
+        .row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: flex-start; margin-bottom: var(--space-3); }
+        .demo { padding: var(--space-3); background: var(--color-surface); border: var(--border); border-radius: var(--radius); margin-bottom: var(--space-2); }
+        .label { display: block; margin-bottom: var(--space-1); font-size: var(--font-size-12); line-height: var(--line-height-12); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
+        .swatch { width: 152px; border: var(--border); border-radius: var(--radius); overflow: hidden; background: var(--color-surface); font-size: var(--font-size-12); line-height: var(--line-height-12); }
+        .swatch__chip { height: 56px; border-bottom: var(--border); }
+        .swatch__meta { padding: var(--space-1); }
+        .space-bar { height: 16px; background: var(--color-primary); }
+        .grid-demo > div { padding: var(--space-1); background: var(--color-primary-subtle); border: 1px solid var(--color-primary-border); text-align: center; font-size: var(--font-size-12); }
+        .icon-cell { display: flex; align-items: center; gap: var(--space-1); width: 260px; font-size: var(--font-size-14); }
+        .static-modal { position: static; background: var(--color-overlay); padding: var(--space-4); animation: none; }
+        .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+        @media (max-width: 700px) { .dodont { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<main class="doc">
+
+    <h1>SLP Information System — component library</h1>
+    <p class="lead">Every component in the app, with all of its states. This page loads <code>css/tokens.css</code>, <code>css/style.css</code> and <code>js/script.js</code> directly, so it always matches production. Rules and rationale live in <code>docs/DESIGN-SYSTEM.md</code>.</p>
+
+    <!-- ====================================================== -->
+    <section id="color">
+        <h2>Colour</h2>
+        <p class="lead">One brand colour (SLP green), a neutral gray scale, and four status colours. Status colours are never decorative and never used without an icon and text.</p>
+        <div class="row" id="swatches"></div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="type">
+        <h2>Typography — Inter only</h2>
+        <p class="lead">Six sizes, three weights. Body text is 16px; nothing a user must read is smaller than 14px. 12px is for badges' neighbours and metadata only.</p>
+        <div class="demo stack">
+            <p class="login__title">32 / 40 Semibold — Sign in, stat values</p>
+            <h1>24 / 32 Semibold — Page title (h1)</h1>
+            <h2>20 / 28 Semibold — Card and section heading (h2)</h2>
+            <h3>16 / 24 Semibold — Sub-heading (h3)</h3>
+            <p>16 / 24 Regular — Body text, inputs, buttons (medium). Plain words, short sentences.</p>
+            <p class="text-14">14 / 20 Regular — Table text, hints, descriptions, labels in toolbars.</p>
+            <p class="text-12 text-secondary">12 / 16 — Captions and counts only.</p>
+        </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="spacing">
+        <h2>Spacing and grid</h2>
+        <p class="lead">8px scale (4px half-step for icon gaps). 12-column grid, 24px gutter. Page margins 16 → 24 → 32px at 600 / 1200px. Card padding 24px (16px on phones).</p>
+        <div class="demo stack" id="spaces"></div>
+        <div class="grid-12 grid-demo">
+            <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div>
+            <div class="span-sm-6 span-lg-8">span-lg-8</div><div class="span-sm-6 span-lg-4">span-lg-4</div>
+        </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="buttons">
+        <h2>Buttons</h2>
+        <p class="lead">44px tall, 16px medium text, 4px radius. One primary button per view area. Icon + label for primary actions; icon-only buttons need <code>aria-label</code> and <code>title</code>.</p>
+        <div class="demo">
+            <span class="label">Primary — default · hover · focus · active · disabled</span>
+            <div class="row">
+                <button class="btn btn--primary"><i data-icon="plus"></i><span>Add beneficiary</span></button>
+                <button class="btn btn--primary is-hover"><i data-icon="plus"></i><span>Hover</span></button>
+                <button class="btn btn--primary is-focus"><i data-icon="plus"></i><span>Focus</span></button>
+                <button class="btn btn--primary is-active"><i data-icon="plus"></i><span>Active</span></button>
+                <button class="btn btn--primary" disabled><i data-icon="plus"></i><span>Disabled</span></button>
+            </div>
+            <span class="label">Secondary</span>
+            <div class="row">
+                <button class="btn btn--secondary"><i data-icon="download"></i><span>Export CSV</span></button>
+                <button class="btn btn--secondary is-hover"><span>Hover</span></button>
+                <button class="btn btn--secondary is-focus"><span>Focus</span></button>
+                <button class="btn btn--secondary" disabled><span>Disabled</span></button>
+            </div>
+            <span class="label">Tertiary (in-table and low-emphasis actions)</span>
+            <div class="row">
+                <button class="btn btn--tertiary"><span>View</span></button>
+                <button class="btn btn--tertiary is-hover"><span>Hover</span></button>
+                <button class="btn btn--tertiary is-focus"><span>Focus</span></button>
+                <button class="btn btn--tertiary" disabled><span>Disabled</span></button>
+            </div>
+            <span class="label">Destructive (only inside a confirmation dialog)</span>
+            <div class="row">
+                <button class="btn btn--destructive"><span>Leave without saving</span></button>
+                <button class="btn btn--destructive is-hover"><span>Hover</span></button>
+                <button class="btn btn--destructive is-focus"><span>Focus</span></button>
+                <button class="btn btn--destructive" disabled><span>Disabled</span></button>
+            </div>
+            <span class="label">Icon-only</span>
+            <div class="row">
+                <button class="btn btn--secondary btn--icon" aria-label="Open menu" title="Open menu"><i data-icon="menu-placeholder"></i></button>
+                <button class="btn btn--tertiary btn--icon" aria-label="Close" title="Close"><i data-icon="x"></i></button>
+            </div>
+        </div>
+        <div class="dodont">
+            <div class="alert alert--success"><i data-icon="circle-check"></i><div class="alert__content"><p class="alert__title">Do</p><p class="alert__body">Start labels with a verb: "Add beneficiary", "Send notification", "Confirm and save".</p></div></div>
+            <div class="alert alert--error"><i data-icon="circle-x"></i><div class="alert__content"><p class="alert__title">Don't</p><p class="alert__body">Use "+ Add New", "Submit", "OK", ALL CAPS, or two primary buttons side by side.</p></div></div>
+        </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="fields">
+        <h2>Form fields</h2>
+        <p class="lead">Visible label above every control (never placeholder-only). Hint between label and control. Errors below the control as icon + text. Mark required fields "(required)".</p>
+        <div class="grid-12">
+            <div class="demo span-lg-6">
+                <div class="field"><label class="field__label" for="d1">Default</label><input id="d1"></div>
+                <div class="field"><label class="field__label" for="d2">Hover</label><input id="d2" class="is-hover"></div>
+                <div class="field"><label class="field__label" for="d3">Focus</label><input id="d3" class="is-focus" value="Maria"></div>
+                <div class="field">
+                    <label class="field__label" for="d4">Last Name <span class="field__req">(required)</span></label>
+                    <input id="d4" aria-invalid="true" aria-describedby="d4e">
+                    <p class="field__error" id="d4e"><i data-icon="circle-alert" data-size="16"></i><span><span class="visually-hidden">Error: </span>Enter last name</span></p>
+                </div>
+                <div class="field"><label class="field__label" for="d5">Disabled</label><input id="d5" disabled value="Not available"></div>
+                <div class="field"><label class="field__label" for="d6">Read-only (personnel section)</label><input id="d6" readonly value="Set by SLP personnel"></div>
+            </div>
+            <div class="demo span-lg-6">
+                <div class="field">
+                    <label class="field__label" for="d7">Location <span class="field__req">(required)</span></label>
+                    <p class="field__hint" id="d7h">Barangay where the participant lives, for example Tilik.</p>
+                    <input id="d7" aria-describedby="d7h">
+                </div>
+                <div class="field"><label class="field__label" for="d8">Select</label><select id="d8"><option>Community Store</option><option>Fishing</option></select></div>
+                <div class="field"><label class="field__label" for="d9">Date (native picker)</label><input id="d9" type="date"></div>
+                <div class="field"><label class="field__label" for="d10">Search</label><input id="d10" type="search" placeholder="Name, ID or barangay"></div>
+                <div class="field"><label class="field__label" for="d11">File</label><input id="d11" type="file"></div>
+                <div class="field"><label class="field__label" for="d12">Textarea</label><textarea id="d12"></textarea></div>
+            </div>
+            <div class="demo span-lg-6">
+                <fieldset class="field-set">
+                    <legend class="field-set__legend">8. Sex</legend>
+                    <div class="choice-group choice-group--inline">
+                        <label class="choice"><input type="radio" name="dsex" checked><span>Male</span></label>
+                        <label class="choice"><input type="radio" name="dsex"><span>Female</span></label>
+                        <label class="choice"><input type="radio" name="dsex" disabled><span>Disabled</span></label>
+                    </div>
+                </fieldset>
+                <fieldset class="field-set">
+                    <legend class="field-set__legend">I agree and authorize SLP to:</legend>
+                    <div class="choice-group">
+                        <label class="choice"><input type="checkbox" checked><span>Use my personal data to assess my eligibility</span></label>
+                        <label class="choice"><input type="checkbox"><span>Share my personal data with partners</span></label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="demo span-lg-6">
+                <div class="error-summary" role="alert">
+                    <h3 class="error-summary__title"><i data-icon="circle-alert"></i>There are 2 problems</h3>
+                    <ul class="error-summary__list"><li><a href="#d4">Enter last name</a></li><li><a href="#d7">Enter location</a></li></ul>
+                </div>
+                <p class="form-error">Select your account type and enter the correct password.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="feedback">
+        <h2>Alerts, toasts and badges</h2>
+        <p class="lead">Alerts are inline and persistent. Toasts confirm an action and disappear after 5s (errors 8s) with a dismiss button. Badges show a status: always icon + text.</p>
+        <div class="stack">
+            <div class="alert alert--info"><i data-icon="info"></i><div class="alert__content"><p class="alert__title">Check your answers</p><p class="alert__body">Nothing has been saved yet.</p></div></div>
+            <div class="alert alert--success"><i data-icon="circle-check"></i><div class="alert__content"><p class="alert__title">Profile saved</p><p class="alert__body">Personnel will review your information.</p></div></div>
+            <div class="alert alert--warning"><i data-icon="triangle-alert"></i><div class="alert__content"><p class="alert__title">Session ending soon</p><p class="alert__body">You will be signed out in 2 minutes.</p></div></div>
+            <div class="alert alert--error"><i data-icon="circle-alert"></i><div class="alert__content"><p class="alert__title">Could not save</p><p class="alert__body">Check your connection and try again.</p></div></div>
+            <div class="alert alert--neutral"><i data-icon="lock"></i><div class="alert__content"><p class="alert__title">For SLP personnel only</p><p class="alert__body">You can view this section but not change it.</p></div></div>
+        </div>
+        <div class="row" style="margin-top: var(--space-3)">
+            <div class="toast toast--success"><i data-icon="circle-check"></i><p class="toast__text">Beneficiary B-005 was saved.</p><button class="btn btn--tertiary btn--icon" aria-label="Dismiss"><i data-icon="x"></i></button></div>
+            <div class="toast toast--error"><i data-icon="circle-alert"></i><p class="toast__text">Access denied.</p><button class="btn btn--tertiary btn--icon" aria-label="Dismiss"><i data-icon="x"></i></button></div>
+        </div>
+        <div class="demo"><span class="label">Status badges (generated by statusBadge())</span><div class="row" id="badges"></div>
+        <span class="label">Role badges (generated by roleBadge())</span><div class="row" id="roles"></div></div>
+    </section>
+
+    <!-- ====================================================== -->
+    <section id="data">
+        <h2>Cards, stats, action tiles</h2>
+        <div class="grid-12">
+            <div class="span-sm-6 span-lg-3" id="stat1"></div>
+            <div class="span-sm-6 span-lg-3" id="stat2"></div>
+            <section class="card span-lg-6"><div id="tiles" class="action-list"></div></section>
+        </div>
+    </section>
+
+    <section id="tables">
+        <h2>Tables, toolbar, pagination</h2>
+        <p class="lead">Sortable headers are buttons with <code>aria-sort</code>. Search has a visible label. The record count is a polite live region. Numbers are right-aligned with tabular figures. Wide tables scroll inside a focusable region.</p>
+        <div class="card" id="tableDemo"></div>
+        <div class="pagination">
+            <p class="pagination__status">Showing 11–20 of 42</p>
+            <nav aria-label="Pages"><ul class="pagination__list">
+                <li><button class="pagination__btn"><i data-icon="chevron-left" data-size="16"></i>Previous</button></li>
+                <li><button class="pagination__btn">1</button></li>
+                <li><button class="pagination__btn" aria-current="page">2</button></li>
+                <li><button class="pagination__btn">3</button></li>
+                <li><button class="pagination__btn">Next<i data-icon="chevron-right" data-size="16"></i></button></li>
+            </ul></nav>
+        </div>
+    </section>
+
+    <section id="nav">
+        <h2>Navigation: sidebar items, breadcrumbs, tabs, stepper</h2>
+        <p class="lead">The sidebar is SLP green with white text. Hover: white background, green text. Current page: darker green with a white inset bar.</p>
+        <div class="grid-12">
+            <div class="demo span-lg-4" style="background: var(--color-sidebar); border-color: var(--color-sidebar)">
+                <h2 class="nav__heading">Program records</h2>
+                <button class="nav__item" aria-current="page"><i data-icon="layout-dashboard"></i><span>Current page</span></button>
+                <button class="nav__item is-hover"><i data-icon="users"></i><span>Hover</span></button>
+                <button class="nav__item"><i data-icon="briefcase"></i><span>Default</span></button>
+            </div>
+            <div class="demo span-lg-8 stack">
+                <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><button class="breadcrumb__link">Home</button></li><li class="breadcrumb__item" aria-current="page">Beneficiaries</li></ol></nav>
+                <div class="tabs__list" role="tablist"><button class="tabs__tab" role="tab" aria-selected="true">All (3)</button><button class="tabs__tab" role="tab" aria-selected="false">Unread (1)</button></div>
+                <ol class="stepper">
+                    <li><button class="stepper__btn"><span class="stepper__num">1</span><span class="stepper__label">Consent</span></button></li>
+                    <li><button class="stepper__btn" aria-current="step"><span class="stepper__num">2</span><span class="stepper__label">Personal information</span></button></li>
+                    <li><button class="stepper__btn"><span class="stepper__num">3</span><span class="stepper__label">Household</span></button></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="dialogs">
+        <h2>Modal and confirmation dialog</h2>
+        <p class="lead">Focus moves into the dialog and is trapped there; Escape closes; focus returns to the trigger. On phones dialogs become bottom sheets with full-width buttons. Confirmations focus the safe option first.</p>
+        <div class="static-modal modal--alert">
+            <div class="modal__dialog" role="alertdialog" aria-labelledby="dmt">
+                <div class="modal__header"><h2 id="dmt">Leave without saving?</h2></div>
+                <div class="modal__body">
+                    <p>You have changes on your profile that are not saved. If you leave this page now, they will be lost.</p>
+                    <div class="modal__footer"><button class="btn btn--secondary is-focus"><span>Stay on this page</span></button><button class="btn btn--destructive"><span>Leave without saving</span></button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="states">
+        <h2>Summary list, empty, error and loading states</h2>
+        <div class="grid-12">
+            <div class="demo span-lg-6" id="summaryDemo"></div>
+            <div class="demo span-lg-6" id="emptyDemo"></div>
+            <div class="demo span-lg-6" id="errorDemo"></div>
+            <div class="demo span-lg-6">
+                <p class="loading"><span class="spinner" aria-hidden="true"></span><span role="status">Loading records…</span></p>
+                <hr>
+                <span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span>
+            </div>
+        </div>
+    </section>
+
+    <section id="icons">
+        <h2>Icons — Lucide outline, 2px stroke</h2>
+        <p class="lead">One set, one stroke, three sizes (16 / 20 / 24). The same meaning always uses the same icon. Icons are <code>aria-hidden</code>; the text label carries the meaning.</p>
+        <div class="row" id="iconGrid"></div>
+    </section>
+
+</main>
+
+<script src="../js/script.js"></script>
+<script>
+    // Render placeholders using the production icon() helper.
+    document.querySelectorAll("i[data-icon]").forEach(el => {
+        const name = el.dataset.icon === "menu-placeholder" ? null : el.dataset.icon;
+        const svg = name ? icon(name, Number(el.dataset.size || 20))
+            : '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+        el.outerHTML = svg;
+    });
+
+    const swatches = [
+        ["--color-text", "#161A21", "17.44:1 on white"], ["--color-text-secondary", "#525A66", "6.97:1"],
+        ["--color-border-strong", "#6B7280", "4.83:1 (inputs)"], ["--color-border", "#DCDFE4", "decorative"],
+        ["--color-bg", "#F6F7F9", "page canvas"], ["--color-surface", "#FFFFFF", "cards"],
+        ["--color-primary", "#166534", "7.13:1 white text"], ["--color-primary-hover", "#14532D", "9.11:1"],
+        ["--color-primary-subtle", "#EEF6F0", "selected bg"], ["--color-info", "#183E70", "info status (blue)"], ["--color-success", "#1E6B34", "5.97:1 on bg"],
+        ["--color-warning", "#7A4A00", "6.97:1 on bg"], ["--color-error", "#A21C14", "6.87:1 on bg"]
+    ];
+    document.getElementById("swatches").innerHTML = swatches.map(([token, hex, note]) =>
+        `<div class="swatch"><div class="swatch__chip" style="background: var(${token})"></div><div class="swatch__meta"><strong>${token}</strong><br>${hex}<br><span class="text-secondary">${note}</span></div></div>`).join("");
+
+    document.getElementById("spaces").innerHTML = [4, 8, 16, 24, 32, 40, 48, 64].map(px =>
+        `<div class="row" style="margin:0;align-items:center"><span class="text-14" style="width:80px">${px}px</span><div class="space-bar" style="width:${px * 3}px"></div></div>`).join("");
+
+    document.getElementById("badges").innerHTML = ["Active", "Approved", "For Review", "For Monitoring", "Needs Follow-up", "Ongoing", "Rejected", "Draft"].map(statusBadge).join("");
+    document.getElementById("roles").innerHTML = ["MSWDO Personnel", "Beneficiary Leader", "Beneficiary Member"].map(roleBadge).join("");
+    document.getElementById("stat1").innerHTML = statCard("Total Beneficiaries", 42, "users");
+    document.getElementById("stat2").innerHTML = statCard("Profile Status", "Updated", "square-user");
+    document.getElementById("tiles").innerHTML = quickAction("users", "Add beneficiary", "", "Register a new SLP participant") + quickAction("wallet", "Record assistance", "", "Log a grant or support released");
+
+    document.getElementById("tableDemo").innerHTML =
+        cardHeader("Assistance records", "Card header: h2 + description + actions.", button("Export CSV", "", { icon: "download" }) + button("Record assistance", "", { variant: "primary", icon: "plus" })) +
+        tableToolbar({ tableId: "demoTable", searchId: "demoSearch", searchHint: "Recipient or type", countId: "demoCount", total: 2, noun: "grants", filterLabel: "Support type", filterOptions: ["Livelihood Capital", "Training Support"] }) +
+        dataTable({ id: "demoTable", caption: "Demo", paginate: false, columns: [{ label: "ID" }, { label: "Recipient" }, { label: "Status" }, { label: "Amount", num: true }],
+            rows: [{ cells: ['<span class="text-id">A-001</span>', "<strong>Maria Santos</strong>", statusBadge("Approved"), "₱10,000"] },
+                   { cells: ['<span class="text-id">A-002</span>', "<strong>Juan Dela Cruz</strong>", statusBadge("For Review"), "₱5,000"] }] });
+    document.querySelector('#tableDemo th[data-col="1"]').setAttribute("aria-sort", "ascending");
+
+    document.getElementById("summaryDemo").innerHTML = summaryList([["Beneficiary ID", '<span class="text-id">B-001</span>'], ["Name", "<strong>Maria Santos</strong>"], ["Status", statusBadge("Active")]]);
+    document.getElementById("emptyDemo").innerHTML = emptyState("inbox", "No documents yet", "Choose Upload document to send your first file.", button("Upload document", "", { variant: "primary", icon: "upload" }));
+    document.getElementById("errorDemo").innerHTML = emptyState("lock", "Access Denied", "Your account type cannot open this page.", button("Return to dashboard", "", { variant: "primary", icon: "home" }), { error: true, eyebrow: "Error 403" });
+
+    document.getElementById("iconGrid").innerHTML = [
+        ["layout-dashboard", "Dashboard"], ["users", "Beneficiaries · Leader role"], ["user", "Member role"], ["square-user", "Profile"],
+        ["briefcase", "Livelihood projects"], ["wallet", "Assistance"], ["clipboard-check", "Field monitoring"], ["file-text", "Reports"],
+        ["bell", "Notifications"], ["user-cog", "User accounts"], ["folder", "Documents"], ["home", "Home / back to dashboard"],
+        ["plus", "Add / create"], ["eye", "Show password"], ["eye-off", "Hide password"], ["pencil", "Change / edit"],
+        ["save", "Save (reserved)"], ["check", "Confirm · mark as read · approve"], ["check-check", "Mark all as read"], ["clipboard-list", "Review step"],
+        ["download", "Export CSV"], ["upload", "Upload document"], ["printer", "Print"], ["send", "Send notification"],
+        ["calculator", "Calculate totals"], ["log-out", "Sign out"], ["x", "Close / dismiss"], ["arrow-left", "Back"],
+        ["arrow-right", "Next / continue"], ["chevron-left", "Previous page"], ["chevron-right", "Next page · open tile"], ["chevrons-up-down", "Sortable column"],
+        ["arrow-up", "Sorted ascending"], ["arrow-down", "Sorted descending"], ["circle-check", "Success status"], ["clock", "Pending status"],
+        ["triangle-alert", "Needs attention · not provided"], ["circle-alert", "Field error"], ["circle-x", "Rejected status"], ["circle-arrow-right", "Ongoing status"],
+        ["circle", "Neutral / unread"], ["info", "Information"], ["lock", "Read-only · access denied · privacy"], ["shield-check", "Staff role"],
+        ["timer", "Session (reserved)"], ["inbox", "Empty list"], ["search-x", "No search results · not found"], ["calendar", "Date"],
+        ["mail", "Recipient"], ["map-pin", "Location (reserved)"]
+    ].map(([name, use]) => `<div class="icon-cell">${icon(name)}<span><strong>${name}</strong><br><span class="text-secondary">${use}</span></span></div>`).join("");
+</script>
+</body>
+</html>

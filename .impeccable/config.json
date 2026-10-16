@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-13T04:35:23.194Z",
+        "reason": "user's phase 1 brief pins Inter as the only font"
+      },
+      {
+        "rule": "em-dash-overuse",
+        "value": "*",
+        "files": [
+          "dswd/index.html"
+        ],
+        "createdAt": "2026-10-13T05:50:18.713Z",
+        "reason": "false positive: the count includes the -- prefix of 91 CSS token names in code elements; the body has 2 real em dashes"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "dswd/index.html"
+        ],
+        "createdAt": "2026-10-13T06:05:02.211Z",
+        "reason": "finish reviewer confirmed false positive: text is inset 16px by table cells, specimen rows and accordion summaries"
+      }
+    ]
+  }
+}

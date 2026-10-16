@@ -1,0 +1,156 @@
+/* ==============================================================
+   DSWD DESIGN SYSTEM — BASE
+   Font, reset, element defaults, focus, layout grid and utilities.
+   Components live in components.css. Values come from tokens.css.
+   ============================================================== */
+
+
+/* 1. FONT — self-hosted Inter variable (48 KB, weights 100–900).
+   The Latin subset has no ₱ sign; it falls back to system-ui.
+   Preloaded (head.php) with font-display: optional: Inter is used when it
+   arrives within the browser's short wait, otherwise that one page view
+   uses system-ui and Inter comes from the cache on the next page. With
+   swap, Chrome held the first paint until the font arrived (0.3–0.5 s on
+   3G); optional never delays it noticeably and never shifts the layout. */
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: optional;
+}
+
+
+/* 2. RESET — the few defaults every page needs. */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+    color-scheme: light;
+    scroll-padding-top: var(--header-offset);  /* keeps anchors and focus clear of the sticky header */
+    scrollbar-color: var(--border-strong) var(--surface);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-body);
+    color: var(--text);
+    background: var(--white);
+    overflow-wrap: anywhere;  /* long URLs and emails wrap instead of widening the page */
+}
+
+img { max-width: 100%; height: auto; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+[hidden] { display: none !important; }
+
+
+/* 3. TYPOGRAPHY — .h1–.h4 copy the heading looks onto any element
+   without changing the document outline. */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+    margin: 0 0 var(--space-2);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-heading);
+    text-wrap: balance;
+}
+h1, .h1 { font-size: var(--fs-h1); }
+h2, .h2 { font-size: var(--fs-h2); }
+h3, .h3 { font-size: var(--fs-h3); }
+h4, .h4 { font-size: var(--fs-h4); }
+
+/* More space above a heading than below it. */
+* + h2 { margin-top: var(--space-5); }
+* + h3, * + h4 { margin-top: var(--space-4); }
+
+p { margin: 0 0 var(--space-2); max-width: var(--measure); }
+
+ul, ol { margin: 0 0 var(--space-2); padding-left: var(--space-3); }
+
+a {
+    color: var(--green-600);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+a:hover, a.is-hover {
+    color: var(--green-700);
+    text-decoration-thickness: 2px;
+}
+
+
+/* 4. FOCUS AND BROWSER SURFACES — one ring everywhere. Set --focus on
+   a dark region (the footer does) to keep the ring visible there. */
+:focus-visible, .is-focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+main[tabindex="-1"]:focus { outline: none; }  /* skip-link target only */
+
+::selection { background: var(--green-100); color: var(--green-900); }
+input, textarea { caret-color: var(--green-600); }
+
+
+/* 5. LAYOUT — centred container and a 12-column grid. Children span
+   all 12 columns until a span class says otherwise. */
+.container {
+    width: min(100% - 2 * var(--page-padding), var(--container));
+    margin-inline: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gap);
+}
+.grid > * { grid-column: span 12; }
+ul.grid, ol.grid { margin: 0; padding: 0; list-style: none; }  /* add role="list" to keep list semantics */
+
+@media (min-width: 768px) {
+    .span-md-4 { grid-column: span 4; }
+    .span-md-6 { grid-column: span 6; }
+}
+
+@media (min-width: 1024px) {
+    .span-lg-3 { grid-column: span 3; }
+    .span-lg-4 { grid-column: span 4; }
+    .span-lg-8 { grid-column: span 8; }
+    .span-lg-9 { grid-column: span 9; }
+}
+
+
+/* 6. UTILITIES */
+.visually-hidden,
+.skip-link:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+
+/* 7. SKIP LINK — first Tab stop on every page; shows only on focus. */
+.skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 10;
+    padding: var(--btn-padding);
+    border-radius: var(--radius-pill);
+    background: var(--green-600);
+    color: var(--white);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+}
+.skip-link:hover { background: var(--green-700); color: var(--white); }

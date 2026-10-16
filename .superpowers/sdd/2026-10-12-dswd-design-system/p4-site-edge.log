@@ -1,0 +1,130 @@
+PASS index.php: one h1, one primary action, landmarks, breadcrumbs
+PASS index.php: names, id references, alt text, lazy images, weight
+PASS index.php: no sideways scroll at 320px
+PASS index.php: no sideways scroll at 360px
+PASS index.php: no sideways scroll at 768px
+PASS index.php: no sideways scroll at 1024px
+PASS index.php: no sideways scroll at 1440px
+PASS programs.php: one h1, one primary action, landmarks, breadcrumbs
+PASS programs.php: names, id references, alt text, lazy images, weight
+PASS programs.php: no sideways scroll at 320px
+PASS programs.php: no sideways scroll at 360px
+PASS programs.php: no sideways scroll at 768px
+PASS programs.php: no sideways scroll at 1024px
+PASS programs.php: no sideways scroll at 1440px
+PASS program.php?slug=sustainable-livelihood-program: one h1, one primary action, landmarks, breadcrumbs
+PASS program.php?slug=sustainable-livelihood-program: names, id references, alt text, lazy images, weight
+PASS program.php?slug=sustainable-livelihood-program: no sideways scroll at 320px
+PASS program.php?slug=sustainable-livelihood-program: no sideways scroll at 360px
+PASS program.php?slug=sustainable-livelihood-program: no sideways scroll at 768px
+PASS program.php?slug=sustainable-livelihood-program: no sideways scroll at 1024px
+PASS program.php?slug=sustainable-livelihood-program: no sideways scroll at 1440px
+PASS news.php: one h1, one primary action, landmarks, breadcrumbs
+PASS news.php: names, id references, alt text, lazy images, weight
+PASS news.php: no sideways scroll at 320px
+PASS news.php: no sideways scroll at 360px
+PASS news.php: no sideways scroll at 768px
+PASS news.php: no sideways scroll at 1024px
+PASS news.php: no sideways scroll at 1440px
+PASS article.php?slug=new-online-feedback-form: one h1, one primary action, landmarks, breadcrumbs
+PASS article.php?slug=new-online-feedback-form: names, id references, alt text, lazy images, weight
+PASS article.php?slug=new-online-feedback-form: no sideways scroll at 320px
+PASS article.php?slug=new-online-feedback-form: no sideways scroll at 360px
+PASS article.php?slug=new-online-feedback-form: no sideways scroll at 768px
+PASS article.php?slug=new-online-feedback-form: no sideways scroll at 1024px
+PASS article.php?slug=new-online-feedback-form: no sideways scroll at 1440px
+PASS downloads.php: one h1, one primary action, landmarks, breadcrumbs
+PASS downloads.php: names, id references, alt text, lazy images, weight
+PASS downloads.php: no sideways scroll at 320px
+PASS downloads.php: no sideways scroll at 360px
+PASS downloads.php: no sideways scroll at 768px
+PASS downloads.php: no sideways scroll at 1024px
+PASS downloads.php: no sideways scroll at 1440px
+PASS transparency.php: one h1, one primary action, landmarks, breadcrumbs
+PASS transparency.php: names, id references, alt text, lazy images, weight
+PASS transparency.php: no sideways scroll at 320px
+PASS transparency.php: no sideways scroll at 360px
+PASS transparency.php: no sideways scroll at 768px
+PASS transparency.php: no sideways scroll at 1024px
+PASS transparency.php: no sideways scroll at 1440px
+PASS offices.php: one h1, one primary action, landmarks, breadcrumbs
+PASS offices.php: names, id references, alt text, lazy images, weight
+PASS offices.php: no sideways scroll at 320px
+PASS offices.php: no sideways scroll at 360px
+PASS offices.php: no sideways scroll at 768px
+PASS offices.php: no sideways scroll at 1024px
+PASS offices.php: no sideways scroll at 1440px
+PASS about.php: one h1, one primary action, landmarks, breadcrumbs
+PASS about.php: names, id references, alt text, lazy images, weight
+PASS about.php: no sideways scroll at 320px
+PASS about.php: no sideways scroll at 360px
+PASS about.php: no sideways scroll at 768px
+PASS about.php: no sideways scroll at 1024px
+PASS about.php: no sideways scroll at 1440px
+PASS contact.php: one h1, one primary action, landmarks, breadcrumbs
+PASS contact.php: names, id references, alt text, lazy images, weight
+PASS contact.php: no sideways scroll at 320px
+PASS contact.php: no sideways scroll at 360px
+PASS contact.php: no sideways scroll at 768px
+PASS contact.php: no sideways scroll at 1024px
+PASS contact.php: no sideways scroll at 1440px
+PASS faqs.php: one h1, one primary action, landmarks, breadcrumbs
+PASS faqs.php: names, id references, alt text, lazy images, weight
+PASS faqs.php: no sideways scroll at 320px
+PASS faqs.php: no sideways scroll at 360px
+PASS faqs.php: no sideways scroll at 768px
+PASS faqs.php: no sideways scroll at 1024px
+PASS faqs.php: no sideways scroll at 1440px
+PASS search.php?q=pension: one h1, one primary action, landmarks, breadcrumbs
+PASS search.php?q=pension: names, id references, alt text, lazy images, weight
+PASS search.php?q=pension: no sideways scroll at 320px
+PASS search.php?q=pension: no sideways scroll at 360px
+PASS search.php?q=pension: no sideways scroll at 768px
+PASS search.php?q=pension: no sideways scroll at 1024px
+PASS search.php?q=pension: no sideways scroll at 1440px
+PASS privacy.php: one h1, one primary action, landmarks, breadcrumbs
+PASS privacy.php: names, id references, alt text, lazy images, weight
+PASS privacy.php: no sideways scroll at 320px
+PASS privacy.php: no sideways scroll at 360px
+PASS privacy.php: no sideways scroll at 768px
+PASS privacy.php: no sideways scroll at 1024px
+PASS privacy.php: no sideways scroll at 1440px
+PASS terms.php: one h1, one primary action, landmarks, breadcrumbs
+PASS terms.php: names, id references, alt text, lazy images, weight
+PASS terms.php: no sideways scroll at 320px
+PASS terms.php: no sideways scroll at 360px
+PASS terms.php: no sideways scroll at 768px
+PASS terms.php: no sideways scroll at 1024px
+PASS terms.php: no sideways scroll at 1440px
+PASS sitemap.php: one h1, one primary action, landmarks, breadcrumbs
+PASS sitemap.php: names, id references, alt text, lazy images, weight
+PASS sitemap.php: no sideways scroll at 320px
+PASS sitemap.php: no sideways scroll at 360px
+PASS sitemap.php: no sideways scroll at 768px
+PASS sitemap.php: no sideways scroll at 1024px
+PASS sitemap.php: no sideways scroll at 1440px
+PASS index.php: targets are at least 44px at 360px
+PASS programs.php: targets are at least 44px at 360px
+PASS contact.php: targets are at least 44px at 360px
+PASS offices.php: targets are at least 44px at 360px
+PASS index.php: every Tab stop shows a focus ring
+PASS programs.php: every Tab stop shows a focus ring
+PASS contact.php: every Tab stop shows a focus ring
+PASS header is sticky
+PASS menu opens with Enter and closes with Escape at 360px
+PASS section page is the current page; a page inside it is the current section
+PASS language toggle switches to Filipino and remembers it
+PASS programs: type filter shows only services
+PASS programs: category filter
+PASS programs: no match shows the empty state
+PASS news: search narrows the list
+PASS news: two pages of six
+PASS news pagination: phones read "Page 1 of 2", wider screens get the page numbers
+PASS skip link is the first Tab stop and moves focus to the main content
+PASS downloads: category and year filters
+PASS offices: region filter
+PASS search groups results by type
+PASS unknown program returns 404 with a way back
+PASS contact form: required fields, privacy notice and consent
+PASS every program, its requirements and the forms are within 3 clicks of home
+129/129 passed

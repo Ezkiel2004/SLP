@@ -1,0 +1,2 @@
+# Uploaded files are served only through PHP after a permission check.
+Require all denied

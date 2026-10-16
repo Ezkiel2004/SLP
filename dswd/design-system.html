@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Design system | DSWD</title>
+    <meta name="description" content="Design tokens and components for the DSWD website: colors, type, spacing, icons, buttons, forms, tabs, accordion, alerts, tables, pagination, modal, header and footer.">
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+    <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        /* PREVIEW-ONLY STYLES (ds-*). Never use these on real pages.
+           Token values only, like the rest of the system. */
+        .ds-page { padding-block: var(--space-4) var(--space-6); }
+        .ds-page code { font: inherit; font-weight: var(--fw-medium); color: var(--green-900); }
+
+        .ds-toc { font-size: var(--fs-small); }
+        .ds-toc__title, .ds-toc__group { margin: 0 0 var(--space-1); font-weight: var(--fw-semibold); }
+        .ds-toc__group { color: var(--text-muted); }
+        .ds-toc ul { list-style: none; margin: 0 0 var(--space-3); padding: 0; }
+        .ds-toc a { display: block; padding-block: calc((var(--target-min) - 1em * var(--lh-body)) / 2); }
+        /* Sticks below the sticky site header and scrolls inside itself on short screens. */
+        @media (min-width: 1024px) {
+            .ds-toc {
+                position: sticky;
+                top: calc(var(--header-offset) + var(--space-3));
+                align-self: start;
+                max-height: calc(100vh - var(--header-offset) - var(--space-5));
+                overflow-y: auto;
+            }
+        }
+
+        .ds-section + .ds-section {
+            margin-top: var(--space-5);
+            padding-top: var(--space-5);
+            border-top: 1px solid var(--border);
+        }
+        .ds-rule { color: var(--text-muted); }
+
+        .ds-specimen {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+            padding: var(--space-2);
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+        @media (min-width: 768px) { .ds-specimen { padding: var(--space-3); } }
+        .ds-specimen > :last-child { margin-bottom: 0; }
+        .ds-specimen > .grid { flex: 1 1 100%; }
+        .ds-state { display: flex; flex-direction: column; gap: var(--space-1); margin: 0; }
+        .ds-state > a, .ds-state > button { align-self: flex-start; }  /* controls keep their own width */
+        .ds-state figcaption { font-size: var(--fs-small); color: var(--text-muted); }
+
+        .ds-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-6) * 2), 1fr));
+            gap: var(--space-3);
+            margin: 0;
+            padding: var(--space-3);
+            list-style: none;
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+        .ds-icons li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--fs-small);
+            color: var(--text-muted);
+        }
+        .ds-icons .icon { color: var(--text); }
+
+        .ds-stack { display: grid; gap: var(--space-2); }
+
+        .ds-swatch {
+            display: inline-block;
+            width: var(--space-3);
+            height: var(--space-3);
+            vertical-align: middle;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+        }
+        .ds-swatch--green-900 { background: var(--green-900); }
+        .ds-swatch--green-700 { background: var(--green-700); }
+        .ds-swatch--green-600 { background: var(--green-600); }
+        .ds-swatch--green-100 { background: var(--green-100); }
+        .ds-swatch--white { background: var(--white); }
+        .ds-swatch--surface { background: var(--surface); }
+        .ds-swatch--text { background: var(--text); }
+        .ds-swatch--text-muted { background: var(--text-muted); }
+        .ds-swatch--border { background: var(--border); }
+        .ds-swatch--border-strong { background: var(--border-strong); }
+        .ds-swatch--success { background: var(--success); }
+        .ds-swatch--warning { background: var(--warning); }
+        .ds-swatch--error { background: var(--error); }
+        .ds-swatch--focus { background: var(--focus); }
+        .ds-swatch--overlay { background: var(--overlay); }
+
+        .ds-type__row { padding-block: var(--space-2); border-bottom: 1px solid var(--border); }
+        .ds-type__row > * { margin: 0; }
+        .ds-type__meta { margin-top: var(--space-1); font-size: var(--fs-small); color: var(--text-muted); }
+        .ds-type__small { font-size: var(--fs-small); }
+
+        .ds-spacing { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+        .ds-spacing li { display: grid; grid-template-columns: var(--space-6) auto; align-items: center; gap: var(--space-2); }
+        .ds-bar { height: var(--space-2); background: var(--green-600); }
+        #color td:nth-child(4) { min-width: calc(var(--space-6) * 3); white-space: normal; }
+        .ds-bar--1 { width: var(--space-1); }
+        .ds-bar--2 { width: var(--space-2); }
+        .ds-bar--3 { width: var(--space-3); }
+        .ds-bar--4 { width: var(--space-4); }
+        .ds-bar--5 { width: var(--space-5); }
+        .ds-bar--6 { width: var(--space-6); }
+
+        .ds-grid-demo { display: grid; gap: var(--grid-gap); }
+        .ds-type__row:last-child { border-bottom: 0; }
+        .ds-section > * + .ds-specimen { margin-top: var(--space-3); }
+
+        /* Grid cells are not actions, so no pill or green tint. */
+        .ds-cell {
+            padding: var(--space-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            font-size: var(--fs-small);
+            font-weight: var(--fw-medium);
+            text-align: center;
+        }
+    </style>
+    <script src="js/ui.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="#">
+                <img class="brand__logo" src="img/logo.svg" alt="" width="40" height="40">
+                <span class="brand__name">Department of Social Welfare and Development</span>
+            </a>
+            <button class="btn btn--ghost menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#menu"></use></svg>Menu
+            </button>
+            <nav class="site-nav" id="site-nav" aria-label="Main">
+                <ul class="site-nav__list">
+                    <li><a class="site-nav__link" href="#">Home</a></li>
+                    <li><a class="site-nav__link" href="#">About us</a></li>
+                    <li><a class="site-nav__link" href="#">Programs and services</a></li>
+                    <li><a class="site-nav__link" href="#">Transparency</a></li>
+                    <li><a class="site-nav__link" href="#">News</a></li>
+                    <li><a class="site-nav__link" href="#">Contact us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <div class="container ds-page">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="#">Home</a></li>
+                    <li class="breadcrumb__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg><a href="#">Resources</a></li>
+                    <li class="breadcrumb__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg><span aria-current="page">Design system</span></li>
+                </ol>
+            </nav>
+            <h1>Design system</h1>
+            <p>Tokens and components for the DSWD website. Load <code>css/tokens.css</code>, <code>css/base.css</code> and <code>css/components.css</code> in that order, then <code>js/ui.js</code> with <code>defer</code>.</p>
+
+            <div class="grid">
+                <nav class="ds-toc span-lg-3" aria-label="On this page">
+                    <p class="ds-toc__title">On this page</p>
+                    <p class="ds-toc__group" id="toc-foundations">Foundations</p>
+                    <ul aria-labelledby="toc-foundations">
+                        <li><a href="#color">Color</a></li>
+                        <li><a href="#typography">Typography</a></li>
+                        <li><a href="#spacing">Spacing</a></li>
+                        <li><a href="#shape">Shape and elevation</a></li>
+                        <li><a href="#grid">Grid</a></li>
+                        <li><a href="#icons">Icons</a></li>
+                    </ul>
+                    <p class="ds-toc__group" id="toc-components">Components</p>
+                    <ul aria-labelledby="toc-components">
+                        <li><a href="#buttons">Buttons</a></li>
+                        <li><a href="#forms">Form controls</a></li>
+                        <li><a href="#card">Card</a></li>
+                        <li><a href="#tabs">Tabs</a></li>
+                        <li><a href="#accordion">Accordion</a></li>
+                        <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+                        <li><a href="#alerts">Alerts</a></li>
+                        <li><a href="#table">Table</a></li>
+                        <li><a href="#pagination">Pagination</a></li>
+                        <li><a href="#modal">Modal</a></li>
+                        <li><a href="#header-footer">Header and footer</a></li>
+                    </ul>
+                </nav>
+
+                <div class="span-lg-9">
+                    <section class="ds-section" id="color" aria-labelledby="color-title">
+                        <h2 id="color-title">Color</h2>
+                        <p class="ds-rule">Green and white carry the brand. Status colors appear only on icons and borders.</p>
+                        <div class="table-wrap" role="region" aria-labelledby="color-table-caption" tabindex="0">
+                            <table class="table">
+                                <caption id="color-table-caption">Color tokens</caption>
+                                <thead>
+                                    <tr><th scope="col">Swatch</th><th scope="col">Token</th><th scope="col">Hex</th><th scope="col">Use</th><th scope="col">Contrast</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><span class="ds-swatch ds-swatch--green-900"></span></td><td><code>--green-900</code></td><td>#0F4A2C</td><td>Footer, headings on tint</td><td>White on it 10.31:1</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--green-700"></span></td><td><code>--green-700</code></td><td>#166039</td><td>Button hover</td><td>White on it 7.59:1</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--green-600"></span></td><td><code>--green-600</code></td><td>#1E7A4C</td><td>Primary buttons, links</td><td>5.33:1 on white</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--green-100"></span></td><td><code>--green-100</code></td><td>#E8F4EC</td><td>Hover, selected and current tint</td><td>Green-900 on it 9.13:1</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--white"></span></td><td><code>--white</code></td><td>#FFFFFF</td><td>Page and card background</td><td>—</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--surface"></span></td><td><code>--surface</code></td><td>#F6F9F7</td><td>Table header, preview areas</td><td>Text on it 15.04:1</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--text"></span></td><td><code>--text</code></td><td>#1A2420</td><td>Body text and headings</td><td>15.94:1 on white</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--text-muted"></span></td><td><code>--text-muted</code></td><td>#5A6760</td><td>Hints, captions, disabled text</td><td>5.93:1 on white</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--border"></span></td><td><code>--border</code></td><td>#DDE5E0</td><td>Card and divider borders, disabled fill</td><td>Decorative, 1.28:1</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--border-strong"></span></td><td><code>--border-strong</code></td><td>#5A6760</td><td>Edges of form controls</td><td>5.93:1 (3:1 needed)</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--success"></span></td><td><code>--success</code></td><td>#1E8E5A</td><td>Success icon and border only</td><td>4.14:1, never text</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--warning"></span></td><td><code>--warning</code></td><td>#C77700</td><td>Warning icon and border only</td><td>3.46:1, never text</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--error"></span></td><td><code>--error</code></td><td>#C62828</td><td>Error icon, border and message text</td><td>5.62:1 on white</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--focus"></span></td><td><code>--focus</code></td><td>var(--green-600)</td><td>Focus ring; white inside the footer</td><td>5.33:1 on white</td></tr>
+                                    <tr><td><span class="ds-swatch ds-swatch--overlay"></span></td><td><code>--overlay</code></td><td>rgba(26, 36, 32, 0.5)</td><td>Dialog backdrop</td><td>—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="typography" aria-labelledby="typography-title">
+                        <h2 id="typography-title">Typography</h2>
+                        <p class="ds-rule">One font, Inter, in weights 400, 500 and 600.</p>
+                        <div class="ds-type">
+                            <div class="ds-type__row"><p class="h1">Programs and services</p><p class="ds-type__meta">H1 · 32px on phones, 40px from 768px · line height 1.2 · 600</p></div>
+                            <div class="ds-type__row"><p class="h2">Programs and services</p><p class="ds-type__meta">H2 · 28px on phones, 32px from 768px · line height 1.2 · 600</p></div>
+                            <div class="ds-type__row"><p class="h3">Programs and services</p><p class="ds-type__meta">H3 · 24px · line height 1.2 · 600</p></div>
+                            <div class="ds-type__row"><p class="h4">Programs and services</p><p class="ds-type__meta">H4 · 20px · line height 1.2 · 600</p></div>
+                            <div class="ds-type__row"><p>Find help for your family.</p><p class="ds-type__meta">Body · 16px · line height 1.5 · 400 (labels and buttons 500)</p></div>
+                            <div class="ds-type__row"><p class="ds-type__small">Find help for your family.</p><p class="ds-type__meta">Small · 14px · line height 1.5 · 400</p></div>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="spacing" aria-labelledby="spacing-title">
+                        <h2 id="spacing-title">Spacing</h2>
+                        <p class="ds-rule">Space comes in steps of 8px.</p>
+                        <ul class="ds-spacing">
+                            <li><span class="ds-bar ds-bar--1"></span><span><code>--space-1</code> 8px</span></li>
+                            <li><span class="ds-bar ds-bar--2"></span><span><code>--space-2</code> 16px</span></li>
+                            <li><span class="ds-bar ds-bar--3"></span><span><code>--space-3</code> 24px</span></li>
+                            <li><span class="ds-bar ds-bar--4"></span><span><code>--space-4</code> 32px</span></li>
+                            <li><span class="ds-bar ds-bar--5"></span><span><code>--space-5</code> 48px</span></li>
+                            <li><span class="ds-bar ds-bar--6"></span><span><code>--space-6</code> 64px</span></li>
+                        </ul>
+                    </section>
+
+                    <section class="ds-section" id="shape" aria-labelledby="shape-title">
+                        <h2 id="shape-title">Shape and elevation</h2>
+                        <p class="ds-rule">Actions are pills. Containers and fields have a 16px radius and a 1px border.</p>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><button class="btn btn--primary" type="button">Apply now</button><figcaption>Pill: <code>--radius-pill</code> (999px)</figcaption></figure>
+                            <figure class="ds-state"><div class="card">Card: 16px radius, 1px border, shadow</div><figcaption><code>--radius</code>, <code>--border</code>, <code>--shadow</code></figcaption></figure>
+                            <figure class="ds-state">
+                                <div class="field">
+                                    <label class="field__label" for="f-edge">Field edge</label>
+                                    <input class="input" id="f-edge" name="field-edge" type="text">
+                                </div>
+                                <figcaption><code>--border-strong</code>, 3:1 or more</figcaption>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="grid" aria-labelledby="grid-title">
+                        <h2 id="grid-title">Grid</h2>
+                        <p class="ds-rule">Twelve columns, up to 1200px wide. Columns stack below 768px.</p>
+                        <div class="ds-grid-demo">
+                            <div class="grid"><div class="ds-cell">12</div></div>
+                            <div class="grid"><div class="ds-cell span-md-6">span-md-6</div><div class="ds-cell span-md-6">span-md-6</div></div>
+                            <div class="grid"><div class="ds-cell span-md-4">span-md-4</div><div class="ds-cell span-md-4">span-md-4</div><div class="ds-cell span-md-4">span-md-4</div></div>
+                            <div class="grid"><div class="ds-cell span-md-6 span-lg-3">span-lg-3</div><div class="ds-cell span-md-6 span-lg-3">span-lg-3</div><div class="ds-cell span-md-6 span-lg-3">span-lg-3</div><div class="ds-cell span-md-6 span-lg-3">span-lg-3</div></div>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="icons" aria-labelledby="icons-title">
+                        <h2 id="icons-title">Icons</h2>
+                        <p class="ds-rule">Use one Lucide icon next to visible text. Icons take the text color.</p>
+                        <ul class="ds-icons">
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#menu"></use></svg>menu</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#x"></use></svg>x</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg>chevron-down</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-left"></use></svg>chevron-left</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg>chevron-right</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#arrow-right"></use></svg>arrow-right</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#download"></use></svg>download</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#external-link"></use></svg>external-link</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-check"></use></svg>circle-check</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#triangle-alert"></use></svg>triangle-alert</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>circle-alert</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#phone"></use></svg>phone</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#mail"></use></svg>mail</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#map-pin"></use></svg>map-pin</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#search"></use></svg>search</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#hand-heart"></use></svg>hand-heart</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#heart-handshake"></use></svg>heart-handshake</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#file-text"></use></svg>file-text</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#megaphone"></use></svg>megaphone</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#building-2"></use></svg>building-2</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#clock"></use></svg>clock</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#calendar"></use></svg>calendar</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#globe"></use></svg>globe</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#check"></use></svg>check</li>
+                            <li><svg class="icon icon--24" aria-hidden="true" focusable="false"><use href="img/icons.svg#user"></use></svg>user</li>
+                        </ul>
+                    </section>
+
+                    <section class="ds-section" id="buttons" aria-labelledby="buttons-title">
+                        <h2 id="buttons-title">Buttons</h2>
+                        <p class="ds-rule">Use one primary button per area. Start the label with a verb.</p>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><button class="btn btn--primary" type="button">Apply now</button><figcaption>Primary</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--primary is-hover" type="button">Apply now</button><figcaption>Hover</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--primary is-focus" type="button">Apply now</button><figcaption>Focus</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--primary" type="button" disabled>Apply now</button><figcaption>Disabled</figcaption></figure>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><button class="btn btn--secondary" type="button">View requirements</button><figcaption>Secondary</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--secondary is-hover" type="button">View requirements</button><figcaption>Hover</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--secondary is-focus" type="button">View requirements</button><figcaption>Focus</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--secondary" type="button" disabled>View requirements</button><figcaption>Disabled</figcaption></figure>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><button class="btn btn--ghost" type="button">Skip this step</button><figcaption>Ghost</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--ghost is-hover" type="button">Skip this step</button><figcaption>Hover</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--ghost is-focus" type="button">Skip this step</button><figcaption>Focus</figcaption></figure>
+                            <figure class="ds-state"><button class="btn btn--ghost" type="button" disabled>Skip this step</button><figcaption>Disabled</figcaption></figure>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state">
+                                <div class="btn-group">
+                                    <button class="btn btn--primary" type="button">Apply now</button>
+                                    <button class="btn btn--secondary" type="button">Cancel</button>
+                                </div>
+                                <figcaption>Button group: stacks full width below 360px</figcaption>
+                            </figure>
+                            <figure class="ds-state">
+                                <div class="btn-group">
+                                    <button class="btn btn--primary" type="button"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#download"></use></svg>Download form</button>
+                                    <button class="btn btn--secondary" type="button">Next<svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#arrow-right"></use></svg></button>
+                                    <a class="btn btn--secondary" role="link" aria-disabled="true">Disabled link</a>
+                                </div>
+                                <figcaption>With icons, and a disabled link</figcaption>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="forms" aria-labelledby="forms-title">
+                        <h2 id="forms-title">Form controls</h2>
+                        <p class="ds-rule">Every field has a visible label. Hints say how to answer. Errors say how to fix the problem.</p>
+
+                        <h3>Text input</h3>
+                        <div class="ds-specimen">
+                            <div class="grid">
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-name">Full name <span class="field__required">(required)</span></label>
+                                        <p class="field__hint" id="f-name-hint">Write it as it appears on your valid ID.</p>
+                                        <input class="input" id="f-name" name="full-name" type="text" autocomplete="name" required aria-describedby="f-name-hint">
+                                    </div>
+                                    <figcaption>Default</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-email">Email address</label>
+                                        <input class="input is-hover" id="f-email" name="email" type="email" autocomplete="email">
+                                    </div>
+                                    <figcaption>Hover</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-mobile">Mobile number</label>
+                                        <p class="field__hint" id="f-mobile-hint">For example, 0917 123 4567.</p>
+                                        <input class="input is-focus" id="f-mobile" name="mobile" type="tel" autocomplete="tel" aria-describedby="f-mobile-hint">
+                                    </div>
+                                    <figcaption>Focus</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-name-err">Full name <span class="field__required">(required)</span></label>
+                                        <p class="field__hint" id="f-name-err-hint">Write it as it appears on your valid ID.</p>
+                                        <p class="field__error" id="f-name-err-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>Error: Enter your full name</p>
+                                        <input class="input" id="f-name-err" name="full-name-error" type="text" autocomplete="name" required aria-invalid="true" aria-describedby="f-name-err-hint f-name-err-error">
+                                    </div>
+                                    <figcaption>Error</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-ref">Reference number</label>
+                                        <input class="input" id="f-ref" name="reference" type="text" value="SAMPLE-0001" disabled>
+                                    </div>
+                                    <figcaption>Disabled</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <h3>Textarea and select</h3>
+                        <div class="ds-specimen">
+                            <div class="grid">
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-concern">Your concern</label>
+                                        <p class="field__hint" id="f-concern-hint">Describe it in a few sentences.</p>
+                                        <textarea class="input" id="f-concern" name="concern" rows="4" aria-describedby="f-concern-hint"></textarea>
+                                    </div>
+                                    <figcaption>Textarea</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-type">Type of assistance</label>
+                                        <div class="select">
+                                            <select class="input" id="f-type" name="assistance-type">
+                                                <option value="">Choose one</option>
+                                                <option>Medical assistance</option>
+                                                <option>Burial assistance</option>
+                                                <option>Educational assistance</option>
+                                                <option>Transportation assistance</option>
+                                                <option>Food assistance</option>
+                                            </select>
+                                            <svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg>
+                                        </div>
+                                    </div>
+                                    <figcaption>Select</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-payout">Payout method</label>
+                                        <p class="field__hint" id="f-payout-hint">Available after approval.</p>
+                                        <div class="select">
+                                            <select class="input" id="f-payout" name="payout" aria-describedby="f-payout-hint" disabled>
+                                                <option value="">Choose one</option>
+                                            </select>
+                                            <svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg>
+                                        </div>
+                                    </div>
+                                    <figcaption>Disabled select</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-concern-focus">Your concern</label>
+                                        <textarea class="input is-focus" id="f-concern-focus" name="concern-focus" rows="4"></textarea>
+                                    </div>
+                                    <figcaption>Textarea: focus</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-concern-err">Your concern <span class="field__required">(required)</span></label>
+                                        <p class="field__error" id="f-concern-err-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>Error: Describe your concern in a few words</p>
+                                        <textarea class="input" id="f-concern-err" name="concern-error" rows="4" required aria-invalid="true" aria-describedby="f-concern-err-error"></textarea>
+                                    </div>
+                                    <figcaption>Textarea: error</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-type-focus">Type of assistance</label>
+                                        <div class="select">
+                                            <select class="input is-focus" id="f-type-focus" name="assistance-type-focus">
+                                                <option value="">Choose one</option>
+                                                <option>Medical assistance</option>
+                                            </select>
+                                            <svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg>
+                                        </div>
+                                    </div>
+                                    <figcaption>Select: focus</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="field">
+                                        <label class="field__label" for="f-type-err">Type of assistance <span class="field__required">(required)</span></label>
+                                        <p class="field__error" id="f-type-err-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>Error: Choose the type of assistance</p>
+                                        <div class="select">
+                                            <select class="input" id="f-type-err" name="assistance-type-error" required aria-invalid="true" aria-describedby="f-type-err-error">
+                                                <option value="">Choose one</option>
+                                                <option>Medical assistance</option>
+                                            </select>
+                                            <svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg>
+                                        </div>
+                                    </div>
+                                    <figcaption>Select: error</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <h3>Checkboxes and radios</h3>
+                        <div class="ds-specimen">
+                            <div class="grid">
+                                <figure class="ds-state span-md-6">
+                                    <fieldset class="fieldset" aria-describedby="f-programs-hint">
+                                        <legend class="fieldset__legend">Which programs are you asking about?</legend>
+                                        <p class="field__hint" id="f-programs-hint">Select all that apply.</p>
+                                        <div class="choices">
+                                            <label class="choice"><input type="checkbox" name="programs" value="4ps">Pantawid Pamilyang Pilipino Program</label>
+                                            <label class="choice"><input type="checkbox" name="programs" value="slp">Sustainable Livelihood Program</label>
+                                            <label class="choice"><input type="checkbox" name="programs" value="aics">Assistance to Individuals in Crisis Situations</label>
+                                            <label class="choice"><input type="checkbox" name="programs" value="social-pension" disabled>Social Pension for Indigent Senior Citizens</label>
+                                        </div>
+                                    </fieldset>
+                                    <figcaption>Checkboxes, the last one disabled</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset__legend">Privacy notice <span class="field__required">(required)</span></legend>
+                                        <p class="field__error" id="f-privacy-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>Error: Agree to the privacy notice to continue</p>
+                                        <div class="choices">
+                                            <label class="choice"><input type="checkbox" id="f-privacy" name="privacy" required aria-invalid="true" aria-describedby="f-privacy-error">I agree to the privacy notice</label>
+                                        </div>
+                                    </fieldset>
+                                    <figcaption>Error</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset__legend">How should we contact you?</legend>
+                                        <div class="choices">
+                                            <label class="choice"><input type="radio" name="contact" value="mobile" checked>Mobile number</label>
+                                            <label class="choice is-hover"><input type="radio" name="contact" value="email">Email address</label>
+                                            <label class="choice"><input type="radio" name="contact" value="post">Letter by post</label>
+                                        </div>
+                                    </fieldset>
+                                    <figcaption>Radios, the second one hovered</figcaption>
+                                </figure>
+                                <figure class="ds-state span-md-6">
+                                    <div class="choices">
+                                        <label class="choice"><input class="is-focus" type="checkbox" name="programs-focus" value="slp">Sustainable Livelihood Program</label>
+                                        <label class="choice"><input class="is-focus" type="radio" name="contact-focus" value="email">Email address</label>
+                                    </div>
+                                    <figcaption>Checkbox and radio: focus</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="card" aria-labelledby="card-title">
+                        <h2 id="card-title">Card</h2>
+                        <p class="ds-rule">Group one topic. The title links to the full page; the card itself is not a button.</p>
+                        <div class="grid">
+                            <figure class="ds-state span-md-6">
+                                <article class="card">
+                                    <h3 class="card__title"><a href="#">Pantawid Pamilyang Pilipino Program</a></h3>
+                                    <p>Cash grants for poor households with children, tied to health and education conditions.</p>
+                                </article>
+                                <figcaption>Default</figcaption>
+                            </figure>
+                            <figure class="ds-state span-md-6">
+                                <article class="card">
+                                    <h3 class="card__title"><a class="is-hover" href="#">Sustainable Livelihood Program</a></h3>
+                                    <p>Capacity building that helps poor families start or grow a livelihood.</p>
+                                </article>
+                                <figcaption>Title link: hover</figcaption>
+                            </figure>
+                            <figure class="ds-state span-md-6">
+                                <article class="card">
+                                    <h3 class="card__title"><a class="is-focus" href="#">Assistance to Individuals in Crisis Situations</a></h3>
+                                    <p>Medical, burial, transport, education or food help for people in crisis.</p>
+                                </article>
+                                <figcaption>Title link: focus</figcaption>
+                            </figure>
+                            <figure class="ds-state span-md-6">
+                                <article class="card">
+                                    <h3 class="card__title"><a href="#">Social Pension for Indigent Senior Citizens</a></h3>
+                                    <p>A regular stipend for indigent senior citizens who have no pension or regular income.</p>
+                                </article>
+                                <figcaption>Default</figcaption>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="tabs" aria-labelledby="tabs-title">
+                        <h2 id="tabs-title">Tabs</h2>
+                        <p class="ds-rule">Use tabs to switch between views of one topic. Keep labels short.</p>
+                        <div class="tabs">
+                            <div class="tabs__list" role="tablist" aria-label="About tabs">
+                                <button class="tabs__tab" type="button" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+                                <button class="tabs__tab" type="button" role="tab" id="tab-when" aria-controls="panel-when" aria-selected="false">When to use</button>
+                                <button class="tabs__tab" type="button" role="tab" id="tab-a11y" aria-controls="panel-a11y" aria-selected="false">Accessibility</button>
+                                <button class="tabs__tab" type="button" role="tab" id="tab-archived" aria-selected="false" aria-disabled="true">Archived</button>
+                            </div>
+                            <div class="tabs__panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">
+                                <h3 class="h4">Overview</h3>
+                                <p>Tabs show one view of a topic at a time, such as a program's overview, who can apply and how to apply. The selected tab has a tint, a green ring and bold text.</p>
+                            </div>
+                            <div class="tabs__panel" role="tabpanel" id="panel-when" aria-labelledby="tab-when" tabindex="0">
+                                <h3 class="h4">When to use</h3>
+                                <p>Use tabs when readers switch between views of the same thing. For questions that readers open one at a time, use the accordion instead.</p>
+                            </div>
+                            <div class="tabs__panel" role="tabpanel" id="panel-a11y" aria-labelledby="tab-a11y" tabindex="0">
+                                <h3 class="h4">Accessibility</h3>
+                                <p>Only the selected tab is in the Tab order. Left and Right arrows move between tabs, Home and End jump to the first and last, and Tab moves into the panel. The Archived tab is unavailable, so the keyboard skips it.</p>
+                            </div>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><button class="tabs__tab is-hover" type="button">When to use</button><figcaption>Tab: hover</figcaption></figure>
+                            <figure class="ds-state"><button class="tabs__tab is-focus" type="button">When to use</button><figcaption>Tab: focus</figcaption></figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="accordion" aria-labelledby="accordion-title">
+                        <h2 id="accordion-title">Accordion</h2>
+                        <p class="ds-rule">Use for FAQs. Readers open only what they need. No script is needed.</p>
+                        <div class="accordion">
+                            <details class="accordion__item" open>
+                                <summary class="accordion__summary">Which files does a page need?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                <div class="accordion__body"><p>Load <code>css/tokens.css</code>, <code>css/base.css</code> and <code>css/components.css</code> in that order. Add <code>js/ui.js</code> with <code>defer</code> when the page has a menu, tabs or a dialog.</p></div>
+                            </details>
+                            <details class="accordion__item">
+                                <summary class="accordion__summary">How do I add an icon?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                <div class="accordion__body"><p>Copy the icon's paths from Lucide into a new <code>symbol</code> in <code>img/icons.svg</code>, then show it with an <code>svg</code> and <code>use</code> element. Always place it next to visible text.</p></div>
+                            </details>
+                            <details class="accordion__item">
+                                <summary class="accordion__summary">Why does the accordion have no script?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                <div class="accordion__body"><p>It is a native <code>details</code> element. It works before scripts load, with the keyboard and with screen readers, and the browser's find-in-page opens it.</p></div>
+                            </details>
+                            <details class="accordion__item">
+                                <summary class="accordion__summary">Can I add another color or font?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                <div class="accordion__body"><p>No. The brand is green and white with one font, Inter. Status colors are only for feedback messages.</p></div>
+                            </details>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state">
+                                <div class="accordion">
+                                    <details class="accordion__item">
+                                        <summary class="accordion__summary is-hover">Where can I get help?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                        <div class="accordion__body"><p>Sample answer.</p></div>
+                                    </details>
+                                </div>
+                                <figcaption>Question: hover</figcaption>
+                            </figure>
+                            <figure class="ds-state">
+                                <div class="accordion">
+                                    <details class="accordion__item">
+                                        <summary class="accordion__summary is-focus">Where can I get help?<svg class="icon accordion__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-down"></use></svg></summary>
+                                        <div class="accordion__body"><p>Sample answer.</p></div>
+                                    </details>
+                                </div>
+                                <figcaption>Question: focus</figcaption>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="breadcrumbs" aria-labelledby="breadcrumbs-title">
+                        <h2 id="breadcrumbs-title">Breadcrumbs</h2>
+                        <p class="ds-rule">Show where the page sits. The last item is the current page and is not a link.</p>
+                        <div class="ds-specimen">
+                            <figure class="ds-state">
+                                <nav class="breadcrumb" aria-label="Breadcrumb example">
+                                    <ol class="breadcrumb__list">
+                                        <li class="breadcrumb__item"><a href="#">Home</a></li>
+                                        <li class="breadcrumb__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg><a class="is-hover" href="#">Programs and services</a></li>
+                                        <li class="breadcrumb__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg><a class="is-focus" href="#">Sustainable Livelihood Program</a></li>
+                                        <li class="breadcrumb__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg><span aria-current="page">How to apply</span></li>
+                                    </ol>
+                                </nav>
+                                <figcaption>"Programs and services" shows hover; "Sustainable Livelihood Program" shows focus; "How to apply" is the current page.</figcaption>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="alerts" aria-labelledby="alerts-title">
+                        <h2 id="alerts-title">Alerts</h2>
+                        <p class="ds-rule">Use alerts for feedback only. The color is on the border and icon; the words carry the meaning.</p>
+                        <div class="ds-stack">
+                            <div class="alert alert--success">
+                                <svg class="icon icon--24 alert__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-check"></use></svg>
+                                <div class="alert__content">
+                                    <p class="alert__title"><span class="visually-hidden">Success: </span>Application received</p>
+                                    <p>Sample message. Your reference number is SAMPLE-0001. Keep it for follow-up.</p>
+                                </div>
+                            </div>
+                            <div class="alert alert--warning">
+                                <svg class="icon icon--24 alert__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#triangle-alert"></use></svg>
+                                <div class="alert__content">
+                                    <p class="alert__title"><span class="visually-hidden">Warning: </span>Your session will end soon</p>
+                                    <p>Sample message. Save your work within 2 minutes.</p>
+                                </div>
+                            </div>
+                            <div class="alert alert--error">
+                                <svg class="icon icon--24 alert__icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#circle-alert"></use></svg>
+                                <div class="alert__content">
+                                    <p class="alert__title"><span class="visually-hidden">Error: </span>There is a problem</p>
+                                    <p>Sample message. Enter your full name to continue.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="table" aria-labelledby="table-title">
+                        <h2 id="table-title">Table</h2>
+                        <p class="ds-rule">Use a caption. Numbers are right-aligned. On phones the table scrolls inside its frame.</p>
+                        <div class="table-wrap" role="region" aria-labelledby="sample-table-caption" tabindex="0">
+                            <table class="table">
+                                <caption id="sample-table-caption">Sample data: assistance requests</caption>
+                                <thead>
+                                    <tr><th scope="col">Reference no.</th><th scope="col">Service</th><th scope="col">Date filed</th><th scope="col" class="num">Amount</th><th scope="col">Status</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>SAMPLE-0001</td><td>Medical assistance</td><td>1 Oct 2026</td><td class="num">₱5,000.00</td><td>Received</td></tr>
+                                    <tr><td>SAMPLE-0002</td><td>Burial assistance</td><td>2 Oct 2026</td><td class="num">₱10,000.00</td><td>Under review</td></tr>
+                                    <tr><td>SAMPLE-0003</td><td>Educational assistance</td><td>3 Oct 2026</td><td class="num">₱3,000.00</td><td>Released</td></tr>
+                                    <tr><td>SAMPLE-0004</td><td>Transportation assistance</td><td>5 Oct 2026</td><td class="num">₱1,500.00</td><td>Received</td></tr>
+                                    <tr><td>SAMPLE-0005</td><td>Food assistance</td><td>6 Oct 2026</td><td class="num">₱2,000.00</td><td>Under review</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="pagination" aria-labelledby="pagination-title">
+                        <h2 id="pagination-title">Pagination</h2>
+                        <p class="ds-rule">Show where the reader is in a long list.</p>
+                        <div class="ds-specimen ds-stack">
+                            <figure class="ds-state">
+                            <nav class="pagination" aria-label="Pagination, first page example">
+                                <ul class="pagination__list">
+                                    <li><span class="pagination__link" role="link" aria-disabled="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-left"></use></svg>Previous</span></li>
+                                    <li class="pagination__status">Page 1 of 10</li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-current="page" aria-label="Page 1">1</a></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 2">2</a></li>
+                                    <li class="pagination__page"><span class="pagination__ellipsis" aria-hidden="true">…</span></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 10">10</a></li>
+                                    <li><a class="pagination__link" href="#">Next<svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg></a></li>
+                                </ul>
+                            </nav>
+                            <figcaption>First page: Previous is disabled (gray, not a link). Phones show Previous, "Page 1 of 10" and Next. Numbers: the first and last page, the pages next to the current one, and an ellipsis for longer gaps.</figcaption>
+                            </figure>
+                            <figure class="ds-state">
+                            <nav class="pagination" aria-label="Pagination, middle page example">
+                                <ul class="pagination__list">
+                                    <li><a class="pagination__link" href="#"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-left"></use></svg>Previous</a></li>
+                                    <li class="pagination__status">Page 5 of 10</li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 1">1</a></li>
+                                    <li class="pagination__page"><span class="pagination__ellipsis" aria-hidden="true">…</span></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 4">4</a></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-current="page" aria-label="Page 5">5</a></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 6">6</a></li>
+                                    <li class="pagination__page"><span class="pagination__ellipsis" aria-hidden="true">…</span></li>
+                                    <li class="pagination__page"><a class="pagination__link" href="#" aria-label="Page 10">10</a></li>
+                                    <li><a class="pagination__link" href="#">Next<svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#chevron-right"></use></svg></a></li>
+                                </ul>
+                            </nav>
+                            <figcaption>Middle page: the current page is filled green</figcaption>
+                            </figure>
+                        </div>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><a class="pagination__link is-hover" href="#" aria-label="Page 2">2</a><figcaption>Hover</figcaption></figure>
+                            <figure class="ds-state"><a class="pagination__link is-focus" href="#" aria-label="Page 3">3</a><figcaption>Focus</figcaption></figure>
+                        </div>
+                    </section>
+
+                    <section class="ds-section" id="modal" aria-labelledby="modal-title">
+                        <h2 id="modal-title">Modal</h2>
+                        <p class="ds-rule">Use a dialog only to confirm an action or protect focus. The browser handles focus and Escape.</p>
+                        <div class="ds-specimen">
+                            <button class="btn btn--secondary" type="button" data-modal-open="sample-dialog">Open sample dialog</button>
+                        </div>
+                        <dialog class="modal" id="sample-dialog" aria-labelledby="sample-dialog-title">
+                            <div class="modal__header">
+                                <h2 class="modal__title h3" id="sample-dialog-title">Submit your request?</h2>
+                                <form method="dialog">
+                                    <button class="btn btn--ghost" type="submit"><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#x"></use></svg>Close</button>
+                                </form>
+                            </div>
+                            <div class="modal__body">
+                                <p>Sample dialog. Check your details before you submit. You can't edit the request after this.</p>
+                            </div>
+                            <form class="modal__footer" method="dialog">
+                                <button class="btn btn--secondary" type="submit" value="cancel">Cancel</button>
+                                <button class="btn btn--primary" type="submit" value="confirm">Submit request</button>
+                            </form>
+                        </dialog>
+                    </section>
+
+                    <section class="ds-section" id="header-footer" aria-labelledby="header-footer-title">
+                        <h2 id="header-footer-title">Header and footer</h2>
+                        <p class="ds-rule">Every page uses this header and footer. Below 1024px the nav collapses behind the Menu button.</p>
+                        <p>The header and footer frame this page. Make the window narrower than 1024px to see the Menu button. Without JavaScript the nav stays open.</p>
+                        <h3>Nav link states</h3>
+                        <div class="ds-specimen">
+                            <figure class="ds-state"><a class="site-nav__link" href="#">Home</a><figcaption>Default</figcaption></figure>
+                            <figure class="ds-state"><a class="site-nav__link is-hover" href="#">About us</a><figcaption>Hover</figcaption></figure>
+                            <figure class="ds-state"><a class="site-nav__link is-focus" href="#">News</a><figcaption>Focus</figcaption></figure>
+                            <figure class="ds-state"><a class="site-nav__link is-current" href="#">Programs and services</a><figcaption>Current page: set <code>aria-current="page"</code> on real pages</figcaption></figure>
+                        </div>
+                        <h3>States that do not apply</h3>
+                        <ul>
+                            <li>Buttons, tabs, the accordion, the menu, breadcrumbs and pagination have no error state.</li>
+                            <li>The accordion is a native <code>details</code> element and cannot be disabled.</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="grid">
+                <div class="span-md-6 span-lg-3">
+                    <p class="site-footer__name"><img src="img/logo.svg" alt="" width="40" height="40">Department of Social Welfare and Development</p>
+                    <ul class="site-footer__contact">
+                        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#map-pin"></use></svg>[Office address]</li>
+                        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#phone"></use></svg>[Hotline number]</li>
+                        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="img/icons.svg#mail"></use></svg>[Email address]</li>
+                    </ul>
+                </div>
+                <nav class="span-md-6 span-lg-3" aria-labelledby="footer-about">
+                    <h2 class="site-footer__heading" id="footer-about">About</h2>
+                    <ul>
+                        <li><a href="#">Mandate and functions</a></li>
+                        <li><a href="#">Vision and mission</a></li>
+                        <li><a href="#">Contact us</a></li>
+                    </ul>
+                </nav>
+                <nav class="span-md-6 span-lg-3" aria-labelledby="footer-programs">
+                    <h2 class="site-footer__heading" id="footer-programs">Programs and services</h2>
+                    <ul>
+                        <li><a href="#">Pantawid Pamilyang Pilipino Program</a></li>
+                        <li><a href="#">Sustainable Livelihood Program</a></li>
+                        <li><a href="#">Assistance to Individuals in Crisis Situations</a></li>
+                        <li><a href="#">Social Pension for Indigent Senior Citizens</a></li>
+                    </ul>
+                </nav>
+                <nav class="span-md-6 span-lg-3" aria-labelledby="footer-transparency">
+                    <h2 class="site-footer__heading" id="footer-transparency">Transparency</h2>
+                    <ul>
+                        <li><a href="#">Freedom of Information</a></li>
+                        <li><a href="#">Citizen's Charter</a></li>
+                        <li><a href="#">Transparency Seal</a></li>
+                        <li><a href="#">Procurement</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="site-footer__bottom">
+                <p>© 2026 Department of Social Welfare and Development</p>
+                <nav aria-label="Legal">
+                    <ul>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Terms of use</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

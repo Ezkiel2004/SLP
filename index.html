@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sustainable Livelihood Program (SLP) Information and Monitoring System — Municipal Social Welfare and Development Office (MSWDO), Municipality of Lubang, Occidental Mindoro">
+    <meta name="theme-color" content="#166534">
+    <title>SLP Information System | MSWDO Lubang</title>
+
+    <!-- DSWD design system: one typeface (Inter, self-hosted in assets/fonts),
+         three weights only: 400 / 500 / 600. No third-party font requests;
+         system-ui is the fallback, so the page stays usable offline. -->
+    <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="css/tokens.css?v=3.8">
+    <link rel="stylesheet" href="css/style.css?v=3.8">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- Print-only agency identification (records, reports, forms) -->
+    <div class="print-only print-header" aria-hidden="true">
+        <img src="assets/img/seal.svg" alt="" width="40" height="40">
+        <div>
+            <strong>Municipal Social Welfare and Development Office</strong><br>
+            Municipality of Lubang, Occidental Mindoro · Sustainable Livelihood Program
+        </div>
+        <div class="print-header__meta">Printed <span id="printDate"></span></div>
+    </div>
+
+
+    <!-- =========================================================
+         SIGN-IN SCREEN
+         ========================================================= -->
+    <div id="loginScreen" class="login">
+        <main class="login__inner" aria-labelledby="loginTitle">
+
+            <div class="login__agency">
+                <img class="login__seal" src="assets/img/seal.svg" alt="" width="56" height="56">
+                <div>
+                    <div class="login__agency-name">Municipal Social Welfare and Development Office</div>
+                    <div class="login__agency-place">Municipality of Lubang, Occidental Mindoro · Region IV-B (MIMAROPA)</div>
+                </div>
+            </div>
+
+            <div class="login__card">
+                <h1 id="loginTitle" class="login__title" tabindex="-1">Sign in</h1>
+                <p class="login__subtitle">Sustainable Livelihood Program (SLP) Information System</p>
+
+                <!-- Shown after an automatic sign-out (session timeout) -->
+                <div id="loginNotice" class="alert alert--info login__notice hidden" role="status"></div>
+
+                <form id="loginForm" novalidate>
+
+                    <div class="field">
+                        <label class="field__label" for="username">Username</label>
+                        <p class="field__hint" id="usernameHint">The username the MSWDO gave you.</p>
+                        <input type="text" id="username" required autocomplete="username" autocapitalize="none" spellcheck="false" aria-describedby="usernameHint">
+                    </div>
+
+                    <div class="field">
+                        <label class="field__label" for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="password" required autocomplete="current-password">
+                            <button type="button" id="togglePasswordBtn" class="btn btn--secondary" aria-pressed="false" aria-controls="password">
+                                <svg id="togglePasswordIcon" class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></svg>
+                                <span id="togglePasswordText">Show</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--block">Sign in</button>
+
+                    <p id="loginError" class="form-error" role="alert"></p>
+                </form>
+
+                <p class="login__privacy">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>Your information is protected under the Data Privacy Act of 2012 (R.A. 10173). For authorized MSWDO personnel and SLP participants only.</span>
+                </p>
+
+                <!-- PROTOTYPE ONLY — remove this section before deployment. -->
+                <section class="demo-accounts" aria-labelledby="demoTitle">
+                    <h2 id="demoTitle" class="h4">Demo accounts</h2>
+                    <p class="demo-accounts__hint">Prototype only. Select an account to fill in the form, then choose Sign in.</p>
+                    <div class="demo-accounts__list">
+                        <button type="button" class="demo-account-row" data-username="admin" data-password="admin123">
+                            <span class="demo-account-row__name">MSWDO Personnel</span>
+                            <code>admin123</code>
+                        </button>
+                        <button type="button" class="demo-account-row" data-username="leader" data-password="leader123">
+                            <span class="demo-account-row__name">Association Leader</span>
+                            <code>leader123</code>
+                        </button>
+                        <button type="button" class="demo-account-row" data-username="member" data-password="member123">
+                            <span class="demo-account-row__name">Participant / Member</span>
+                            <code>member123</code>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="login__footer">
+                <p>&copy; 2026 Municipal Social Welfare and Development Office, LGU Lubang</p>
+            </footer>
+        </main>
+    </div>
+
+
+    <!-- =========================================================
+         APPLICATION
+         ========================================================= -->
+    <div id="app" class="app hidden">
+
+        <header class="app-header">
+            <button id="mobileMenuButton" class="btn btn--secondary btn--icon app-header__menu"
+                    aria-label="Open menu" title="Open menu" aria-controls="sidebar" aria-expanded="false">
+                <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+
+            <!-- Agency identity: replace assets/img/seal.svg with the official seal -->
+            <div class="brand">
+                <img class="brand__seal" src="assets/img/seal.svg" alt="" width="40" height="40">
+                <div class="brand__text">
+                    <span class="brand__name">MSWDO Lubang</span>
+                    <span class="brand__system">Sustainable Livelihood Program Information System</span>
+                </div>
+            </div>
+
+            <div class="app-header__actions">
+                <button id="notificationButton" class="btn btn--tertiary btn--icon notification-button" onclick="navigate('notifications')" aria-label="Notifications" title="Notifications">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></svg>
+                    <span id="notificationCount" class="count" aria-hidden="true">0</span>
+                </button>
+
+                <div id="userInfo" class="user-chip"></div>
+
+                <button id="logoutButton" class="btn btn--secondary app-header__logout">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                    <span>Sign out</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <div id="sidebarBackdrop" class="sidebar-backdrop hidden" aria-hidden="true"></div>
+
+            <aside id="sidebar" class="sidebar" aria-label="Main menu">
+                <div class="sidebar__close">
+                    <button id="sidebarCloseButton" class="btn btn--tertiary btn--icon" aria-label="Close menu" title="Close menu">
+                        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+
+                <nav id="navigation" aria-label="Main navigation"></nav>
+
+                <!-- Account controls inside the drawer on small screens -->
+                <div class="sidebar__account">
+                    <div id="sidebarUser" class="user-chip"></div>
+                    <button id="logoutButtonMobile" class="btn btn--secondary btn--block">
+                        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        <span>Sign out</span>
+                    </button>
+                </div>
+            </aside>
+
+            <main id="main" class="main" tabindex="-1">
+                <div class="main__inner">
+                    <div class="page-header">
+                        <nav class="breadcrumb" aria-label="Breadcrumb">
+                            <ol class="breadcrumb__list">
+                                <li class="breadcrumb__item"><button type="button" class="breadcrumb__link" onclick="navigate('dashboard')">Home</button></li>
+                                <li class="breadcrumb__item" aria-current="page" id="breadcrumbCurrent">Dashboard</li>
+                            </ol>
+                        </nav>
+                        <h1 id="pageTitle" tabindex="-1">Dashboard</h1>
+                        <p id="pageDescription" class="page-header__desc">Overview of the Sustainable Livelihood Program</p>
+                    </div>
+
+                    <div id="pageContent" class="page-content"></div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="app-footer">
+            <div class="app-footer__inner">
+                <div class="app-footer__agency">
+                    <img class="app-footer__seal" src="assets/img/seal.svg" alt="" width="32" height="32">
+                    <div>
+                        <div class="app-footer__name">Municipal Social Welfare and Development Office</div>
+                        <div>Municipality of Lubang, Occidental Mindoro · Region IV-B (MIMAROPA)</div>
+                    </div>
+                </div>
+                <div>
+                    <div>Protected under the Data Privacy Act of 2012 (R.A. 10173)</div>
+                    <div>&copy; 2026 LGU Lubang · Sessions end after 15 minutes of inactivity</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- =========================================================
+         MODAL — forms and record details
+         ========================================================= -->
+    <div id="modal" class="modal hidden">
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal__header">
+                <h2 id="modalTitle" tabindex="-1">Record details</h2>
+                <button onclick="closeModal()" class="btn btn--tertiary btn--icon modal__close" aria-label="Close dialog" title="Close">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div id="modalContent" class="modal__body"></div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         ALERT DIALOG — confirmations and session timeout
+         Sits above the modal so an open form is never lost.
+         ========================================================= -->
+    <div id="alertDialog" class="modal modal--alert hidden">
+        <div class="modal__dialog" role="alertdialog" aria-modal="true" aria-labelledby="alertDialogTitle" aria-describedby="alertDialogBody">
+            <div class="modal__header">
+                <h2 id="alertDialogTitle" tabindex="-1">Please confirm</h2>
+            </div>
+            <div class="modal__body">
+                <div id="alertDialogBody"></div>
+                <div id="alertDialogActions" class="modal__footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live region for toast messages -->
+    <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
+    <script src="js/script.js?v=3.8"></script>
+
+</body>
+</html>

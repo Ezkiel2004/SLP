@@ -1,0 +1,3 @@
+# Schema, seed files and the check script (which creates and drops databases)
+# are for the command line only. Never serve them over HTTP.
+Require all denied

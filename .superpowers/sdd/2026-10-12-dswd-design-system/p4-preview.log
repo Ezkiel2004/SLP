@@ -1,0 +1,47 @@
+PASS no sideways scroll at 320px
+PASS no sideways scroll at 360px
+PASS no sideways scroll at 768px
+PASS no sideways scroll at 1024px
+PASS no sideways scroll at 1440px
+PASS one h1 and every nav is labelled
+PASS every id reference resolves
+PASS every control and link has an accessible name
+PASS skip link is the first Tab stop and moves focus to main
+PASS every Tab stop shows a 2px focus outline
+PASS success and warning colors are never text colors
+PASS Inter loads from the page itself
+PASS sprite holds exactly the spec icons and every <use> resolves
+PASS interactive targets are at least 44 by 44px
+PASS buttons are 48px pills and disabled ones look disabled
+PASS button group stacks at 320px
+PASS button group sits in a row at 360px
+PASS menu opens with Enter and closes with Escape at 360px
+PASS desktop nav is a visible row and the toggle is hidden at 1024px
+PASS without JS the nav shows and the toggle is hidden
+PASS live nav marks no current page here; the specimen shows the current-state ring
+PASS footer focus ring is white
+PASS breadcrumb ends with the current page as text
+PASS table scrolls inside its own labelled region at 320px
+PASS pagination has one current page and a non-link disabled Previous
+PASS alerts show the status on the border and icon, never as a side stripe
+PASS invalid controls point at an "Error:" message
+PASS required controls say (required) in their label
+PASS text inputs are 48px tall with a 3:1 border
+PASS a disabled choice looks disabled: muted label and a not-allowed cursor
+PASS tabs follow the ARIA keyboard pattern
+PASS without JS every tab panel shows and the dead tab strip is hidden
+PASS accordion opens and closes from the keyboard
+PASS dialog opens, makes the page inert, closes with Escape and returns focus
+PASS backdrop click closes the dialog and clicks inside do not
+PASS Close and Cancel close the dialog
+PASS color table matches tokens.css
+PASS heading sizes at 360px
+PASS heading sizes at 1440px
+PASS spacing bars match the 8px scale
+PASS checkbox error mark shows on the control and differs from the focus ring
+PASS long unbroken text wraps instead of widening the page at 320px
+PASS a long tab label wraps inside its tab at 320px
+PASS tabs wrap and stay on screen at 360px
+PASS accordion shows one open example
+PASS every interactive component shows hover and focus specimens
+46/46 passed

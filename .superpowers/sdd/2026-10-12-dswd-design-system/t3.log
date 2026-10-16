@@ -1,0 +1,23 @@
+PASS no sideways scroll at 320px
+PASS no sideways scroll at 360px
+PASS no sideways scroll at 768px
+PASS no sideways scroll at 1024px
+PASS no sideways scroll at 1440px
+PASS one h1 and every nav is labelled
+PASS every id reference resolves
+PASS every control and link has an accessible name
+PASS skip link is the first Tab stop and moves focus to main
+PASS every Tab stop shows a 2px focus outline
+PASS success and warning colors are never text colors
+PASS Inter loads from the page itself
+PASS sprite holds exactly the spec icons and every <use> resolves
+PASS interactive targets are at least 44 by 44px
+PASS buttons are 48px pills and disabled ones look disabled
+PASS button group stacks at 320px
+PASS button group sits in a row at 360px
+PASS menu opens with Enter and closes with Escape at 360px
+PASS desktop nav is a visible row and the toggle is hidden at 1024px
+PASS without JS the nav shows and the toggle is hidden
+PASS one current nav item, marked with the selected-state ring
+PASS footer focus ring is white
+22/22 passed

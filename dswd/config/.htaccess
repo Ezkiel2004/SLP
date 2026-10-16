@@ -1,0 +1,2 @@
+# Configuration and secrets are never served.
+Require all denied
